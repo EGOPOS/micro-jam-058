@@ -51,8 +51,6 @@ func _process(delta: float) -> void:
 	
 	_timer += delta
 	
-	print(is_high_tide())
-	
 	# Если находимся в переходе между приливом и отливом
 	if _transitioning:
 		_update_transition(delta)
@@ -79,6 +77,7 @@ func _start_transition() -> void:
 
 
 func _update_transition(delta: float) -> void:
+	#create_tween().tween_property(water_node, "position:y", _target_y, transition_duration)
 	_transition_timer += delta
 	
 	if _transition_timer >= transition_duration:

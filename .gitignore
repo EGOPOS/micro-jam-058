@@ -10,3 +10,4 @@ export_presets.cfg
 
 # Starter Project
 .export/
+.ziva/

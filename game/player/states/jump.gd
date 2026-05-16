@@ -3,7 +3,7 @@ extends PlayerState
 func enter(data):
 	super(data)
 	player.camera_animation_strength = player.camera_animation_air_strength
-	player.jump()
+	player.jump(data.multiplier if data.has("multiplier") else 1.0)
 
 
 func physics_update(delta):

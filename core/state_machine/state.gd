@@ -27,8 +27,8 @@ func unhandled_input(event: InputEvent):
 func change_state(state: State, props: Dictionary = {}):
 	state_machine.change_state(state, props)
 
-func get_left_time():
-	return (Time.get_ticks_msec()-enter_time)/1000.0
+func get_left_time(since: int = enter_time):
+	return (Time.get_ticks_msec()-since)/1000.0
 
 func get_time():
 	return Time.get_ticks_msec()

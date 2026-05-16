@@ -11,10 +11,11 @@ func enter(data):
 func physics_update(delta):
 	super(delta)
 	
-	var sum_velocity = Vector3()
+	player.spend_stamina(delta)
+	
 	var attached_positions = player.get_attached_positions()
 	
-	if attached_positions.is_empty():
+	if attached_positions.is_empty() or not player.is_can_climb():
 		if not player.is_on_floor():
 			change_state(states.Fall)
 		else:
@@ -28,7 +29,9 @@ func physics_update(delta):
 		player.attached_points.left = null
 		
 	if player.is_can_jump() and Input.is_action_just_pressed("movement_jump"):
-		change_state(states.Jump)
+		change_state(states.Jump, {
+			"multiplier": player.climb_jump_velocity_multiplier
+		})
 		return
 	
 	var average_point = Vector3()
@@ -49,5 +52,6 @@ func physics_update(delta):
 
 func exit():
 	super()
+	player.time_not_climbing = get_time()
 	player.attached_points.left = null
 	player.attached_points.right = null

@@ -24,12 +24,18 @@ class_name Player extends CharacterBody3D
 @export var camera_animation_air_strength: float = 5.0
 @export var camera_animation_jetpack_strength: float = 15.0
 
-@export_group("Climbing")
+@export_group("climbing")
+@export var climb_jump_velocity_multiplier: float = 1.6
 @export var max_climbing_distance: float = 3 # distance from attached point
 @export var max_attach_distance: float = 3
 @export var is_right_side_enabled: bool = false
 @export var lean_amount: float = 3
 @export var lean_speed: float = 1.0
+
+@export_group("stamina")
+@export var max_stamina: float = 5.0
+@export var recover_stamina_delay: float = 0.8
+@export var start_recover_from: float = 0.3
 # for wind sound
 #@export_group("sounds")
 #@export var wind_velocity: float = 3.0
@@ -61,6 +67,11 @@ var attached_points: Dictionary = {
 	"right": null
 }
 
+@onready var stamina: float = max_stamina
+var is_climbing: bool = false
+
+var time_not_climbing: int # ticks
+
 var last_good_pos: Vector3
 
 #region movement methods
@@ -73,8 +84,8 @@ func apply_air_acceleration(delta: float, direction: Vector3, multiplier: float 
 func apply_friction(delta: float, multiplier: float = 1.0):
 	velocity = velocity.lerp(Vector3(0, velocity.y, 0), movement_friction * delta * multiplier)
 
-func apply_jump_velocity():
-	velocity.y += jump_velocity
+func apply_jump_velocity(multiplier: float = 1.0):
+	velocity.y += jump_velocity * multiplier
 
 func apply_jump_gravity(delta: float):
 	velocity.y += jump_gravity*delta
@@ -94,9 +105,9 @@ func lerp_camera(delta: float, camera_rotation: Vector3):
 func reset_jump_buffer():
 	jump_buffer = max_jump_buffer
 
-func jump():
+func jump(multiplier: float = 1.0):
 	jump_buffer -= 1
-	apply_jump_velocity()
+	apply_jump_velocity(multiplier)
 
 func is_can_jump():
 	return jump_buffer > 0
@@ -170,6 +181,20 @@ func get_attaching_side():
 
 func get_attached_positions():
 	return attached_points.values().filter(func(a): return a != null).map(func(a): return a.position)
+
+func spend_stamina(value: float):
+	stamina -= value
+	stamina = max(0, stamina)
+
+func restore_stamina(value: float):
+	if stamina == 0:
+		stamina += start_recover_from + value
+	stamina += value
+	stamina = min(stamina, max_stamina)
+
+func is_can_climb():
+	return stamina > 0
+
 #endregion
 
 func fall_return():
