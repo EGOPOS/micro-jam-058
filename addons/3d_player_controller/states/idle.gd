@@ -1,0 +1,21 @@
+extends PlayerState
+
+func enter(data):
+	super(data)
+	player.camera_animation_strength = player.camera_animation_floor_strength
+	player.reset_jump_buffer()
+
+func physics_update(delta):
+	var direction = player.get_direction()
+	
+	if direction != Vector3():
+		change_state(states.Move)
+	
+	if player.is_can_jump() and InputBuffer.is_action_in_buffer("movement_jump"):
+		change_state(states.Jump)
+	
+	if not player.is_on_floor():
+		change_state(states.Fall)
+	
+	player.apply_friction(delta)
+	player.move_and_slide()
