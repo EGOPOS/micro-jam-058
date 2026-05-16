@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://c8syds4251qn0"]
+
+[ext_resource type="Script" uid="uid://mbwuoetmnpnn" path="res://game/shop/shop.gd" id="1_ep8m2"]
+[ext_resource type="PackedScene" uid="uid://j8n8p0wfhbgy" path="res://assets/models/PC.glb" id="1_xxtpb"]
+[ext_resource type="PackedScene" uid="uid://bbqch347a7wdn" path="res://game/shop/shop_interface.tscn" id="2_1td5y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ep8m2"]
+size = Vector3(1, 1, 0.05)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1td5y"]
+viewport_path = NodePath("InterfaceContainer/MarginContainer/SubViewportContainer/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ep8m2"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_1td5y")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1td5y"]
+
+[node name="Shop" type="Node3D" unique_id=266592243]
+process_mode = 3
+script = ExtResource("1_ep8m2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1565856088]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D" unique_id=17670237]
+transform = Transform3D(-4.2947573e-08, -0.12805137, 0.99176776, -5.9157976e-09, 0.99176764, 0.12805137, -1, -3.6760192e-10, -4.3351573e-08, 0.146, 1.58, 0)
+shape = SubResource("BoxShape3D_ep8m2")
+
+[node name="PC" parent="." unique_id=387469739 instance=ExtResource("1_xxtpb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0407865, 0, 1.5113852)
+visible = false
+
+[node name="Cylinder_031" parent="PC" index="0" unique_id=1620875003]
+transform = Transform3D(0.40054062, 0, 0, 0, 0.5022816, 0, 0, 0, 0.40054062, -1.0703528, 0.022000015, -1.5102928)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1491812403]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.5661557, 0)
+material_override = SubResource("StandardMaterial3D_ep8m2")
+mesh = SubResource("QuadMesh_1td5y")
+
+[node name="InterfaceContainer" type="PanelContainer" parent="." unique_id=208411514]
+unique_name_in_owner = true
+process_mode = 3
+custom_minimum_size = Vector2(512, 512)
+offset_left = 320.0
+offset_top = 68.0
+offset_right = 832.0
+offset_bottom = 580.0
+
+[node name="MarginContainer" type="MarginContainer" parent="InterfaceContainer" unique_id=699640398]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="InterfaceContainer/MarginContainer" unique_id=1967184387]
+layout_mode = 2
+stretch = true
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="InterfaceContainer/MarginContainer/SubViewportContainer" unique_id=1812539463]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="ShopInterface" parent="InterfaceContainer/MarginContainer/SubViewportContainer/SubViewport" unique_id=446489245 instance=ExtResource("2_1td5y")]
+metadata/_edit_use_anchors_ = true
+
+[editable path="PC"]

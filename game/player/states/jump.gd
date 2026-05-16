@@ -6,7 +6,7 @@ func enter(data):
 	player.jump(data.multiplier if data.has("multiplier") else 1.0)
 
 
-func physics_update(delta):
+func update(delta):
 	super(delta)
 	var direction = player.get_direction()
 	

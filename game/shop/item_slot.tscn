@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b6e2r38cgvq36"]
+
+[ext_resource type="Script" uid="uid://vkwo1mrl8kfk" path="res://game/shop/item_slot.gd" id="1_vqwa7"]
+
+[node name="ItemSlot" type="PanelContainer" unique_id=1720896179]
+custom_minimum_size = Vector2(0, 120)
+script = ExtResource("1_vqwa7")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=191136736]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=725014780]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=899802997]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1669319075]
+layout_mode = 2
+text = "Upgrade: "
+
+[node name="SlotItemName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1506870771]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Item"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1027622337]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1462990986]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="SlotItemPrice" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/HBoxContainer" unique_id=297920182]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="BuyButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=834817476]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Buy"

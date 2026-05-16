@@ -100,6 +100,8 @@ var default_max_jump_buffer = 0
 signal right_attach_toggled(hit)
 signal left_attach_toggled(hit)
 
+static var is_blocked: bool = false
+
 
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
@@ -249,9 +251,11 @@ func update_picaxe_transform(hit, is_left: bool):
 	pickaxe.global_position = target_position
 	pickaxe.global_rotation = target_rotation
 
-
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))
+
+
+#func _physics_process(delta: float) -> void:
 	# for wind sound
 	#if abs(velocity.y) >= wind_velocity:
 		#if not wind_player.playing:
@@ -264,6 +268,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent):
+	if is_blocked:
+		return
+	
 	if event is InputEventMouseMotion:
 		camera.rotation.x = clamp(camera.rotation.x + -event.relative.y * mouse_sensivity, -camera_clamp_angle, camera_clamp_angle)
 		camera.rotation.y += -event.relative.x * mouse_sensivity

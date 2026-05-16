@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://bbqch347a7wdn"]
+
+[ext_resource type="Script" uid="uid://dds5tc4yb3x37" path="res://game/shop/shop_interface.gd" id="1_26r5k"]
+[ext_resource type="PackedScene" uid="uid://b6e2r38cgvq36" path="res://game/shop/item_slot.tscn" id="2_egf71"]
+
+[node name="ShopInterface" type="Control" unique_id=446489245]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_26r5k")
+slot_scene = ExtResource("2_egf71")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=75745946]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1076186083]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1204842276]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer" unique_id=85316389]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=646472658]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer" unique_id=1127851321]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1166882703]
+layout_mode = 2
+mouse_filter = 1
+text = "Cash:"
+
+[node name="CashCountLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=591675576]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "0"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer" unique_id=2014973667]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+
+[node name="ItemsSlotsContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ScrollContainer" unique_id=947460329]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" parent="MarginContainer/HBoxContainer/ScrollContainer/ItemsSlotsContainer" unique_id=1720896179 instance=ExtResource("2_egf71")]
+layout_mode = 2
+mouse_filter = 1

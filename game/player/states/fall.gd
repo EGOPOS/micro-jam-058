@@ -4,7 +4,7 @@ func enter(data):
 	super(data)
 	player.camera_animation_strength = player.camera_animation_air_strength
 
-func physics_update(delta):
+func update(delta):
 	super(delta)
 	var direction = player.get_direction()
 	

@@ -5,7 +5,7 @@ func enter(data):
 	player.camera_animation_strength = player.camera_animation_floor_strength
 	player.reset_jump_buffer()
 
-func physics_update(delta):
+func update(delta):
 	super(delta)
 	var direction = player.get_direction()
 	
