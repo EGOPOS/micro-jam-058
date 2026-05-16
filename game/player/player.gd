@@ -94,6 +94,7 @@ var default_jump_time_to_descent = 0
 var default_jump_air_bonus = 0
 var default_max_stamina = 0
 var default_start_recover_from = 0
+var default_max_jump_buffer = 0
 
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
@@ -113,6 +114,12 @@ func apply_jump_gravity(delta: float):
 
 func apply_fall_gravity(delta: float):
 	velocity.y += fall_gravity*delta
+
+func get_free_direction() -> Vector3:
+	var input = get_input_direction()
+	var cam_basis = camera.global_transform.basis
+	var dir = cam_basis.x * input.x + cam_basis.z * input.y
+	return dir.normalized()
 
 func get_direction():
 	return Vector3(get_input_direction().x, 0, get_input_direction().y).rotated(Vector3.UP, camera.rotation.y)
@@ -155,6 +162,7 @@ func update_defaults():
 	default_jump_air_bonus = jump_air_bonus
 	default_max_stamina = max_stamina
 	default_start_recover_from = start_recover_from
+	default_max_jump_buffer = max_jump_buffer
 
 
 func apply_defaults():
@@ -164,6 +172,7 @@ func apply_defaults():
 	jump_air_bonus = default_jump_air_bonus
 	max_stamina = default_max_stamina
 	start_recover_from = default_start_recover_from
+	max_jump_buffer = default_max_jump_buffer
 
 
 func update_jump():
@@ -176,7 +185,11 @@ func on_overweight_changed():
 	apply_defaults()
 	
 	var jmp_mult = pow(jump_affect_scale, backpack_component.get_overweight())
-	multiply_jump(jmp_mult)
+	if jmp_mult > 0.6:
+		multiply_jump(jmp_mult)
+		max_jump_buffer = default_max_jump_buffer
+	else:
+		max_jump_buffer = 0
 	
 	var stm_mult = pow(jump_affect_scale, backpack_component.get_overweight())
 	multiply_stamina(stm_mult)
@@ -208,7 +221,7 @@ func _physics_process(delta: float) -> void:
 			target_rotation = pickaxe_markers[pos_index].global_rotation
 		else:
 			target_position = hits[pos_index].position
-			target_rotation = Vector3(hits[pos_index].normal).rotated(Vector3.UP, deg_to_rad(90)).rotated(Vector3.RIGHT, deg_to_rad(120))
+			target_rotation = Vector3(hits[pos_index].normal).rotated(Vector3.LEFT, deg_to_rad(45))#.rotated(Vector3.RIGHT, deg_to_rad(120))
 			
 		pickaxes[pos_index].global_position = target_position
 		pickaxes[pos_index].global_rotation = target_rotation
@@ -237,8 +250,8 @@ func _input(event: InputEvent):
 
 
 #region Climbing
-func apply_climb_attaching(delta: float, target_velocity: Vector3, multiplier: float = air_multiplier):
-	velocity = target_velocity
+func apply_climb_attaching(delta: float, target_velocity: Vector3, multiplier: float):
+	velocity = velocity.lerp(target_velocity, delta * multiplier)
 
 func is_attaching():
 	return (Input.is_action_pressed("mouse_left") and attached_points.left == null) or (Input.is_action_pressed("mouse_right") and attached_points.right == null and is_right_side_enabled)

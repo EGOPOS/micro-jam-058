@@ -11,7 +11,7 @@ func enter(data):
 func physics_update(delta):
 	super(delta)
 	
-	player.spend_stamina(delta)
+	#player.spend_stamina(delta)
 	
 	var attached_positions = player.get_attached_positions()
 	
@@ -34,19 +34,26 @@ func physics_update(delta):
 		})
 		return
 	
-	var average_point = Vector3()
+	var average_point: Vector3 = Vector3()
 	for point: Vector3 in attached_positions:
 		average_point += point
 	average_point /= attached_positions.size()
 	
-	var camera_forward = -camera.global_transform.basis.z
-	var target_pos = average_point + camera_forward * player.lean_amount
+	var direction = player.get_free_direction()
+	var target_pos = average_point + direction * player.lean_amount
+	
+	var multiplier = 1.0 # 1.0 — жесткое ограничение, 0.1 — мягкое «резиновое» натяжение
+	var distance = player.global_position.distance_to(average_point)
+	if distance > player.max_attach_distance:
+		var dir = (player.global_position - average_point).normalized()
+		var target_position = average_point + dir * player.max_attach_distance
+		player.global_position = player.global_position.lerp(target_position, multiplier)
+		
+		#multiplier += (diff.length() - player.lean_amount)
+		#print(average_point, player.global_position)
 	
 	var target_velocity = (target_pos - player.global_position) * player.lean_speed
-	player.apply_climb_attaching(delta, target_velocity)
-	
-	var direction = player.get_direction()
-	player.apply_air_acceleration(delta, direction)
+	player.apply_climb_attaching(delta, target_velocity, player.lean_speed)
 	
 	player.move_and_slide()
 

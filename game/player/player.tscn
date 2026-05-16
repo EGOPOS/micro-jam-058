@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_sns1g"]
 [ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
 [ext_resource type="Script" uid="uid://bjeirc3etwa0f" path="res://game/player/backpack_component.gd" id="3_j0mij"]
+[ext_resource type="PackedScene" uid="uid://b028uk41e8hv7" path="res://assets/models/Pick.glb" id="4_gb4gm"]
 [ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
 [ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
 [ext_resource type="Script" uid="uid://1beo4p62aovt" path="res://game/player/states/move.gd" id="6_f5d78"]
@@ -18,11 +19,12 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("2_aa75y")
 jump_height = 1.5
-jump_time_to_peak = 0.4
-jump_time_to_descent = 0.3
+jump_time_to_peak = 0.2
 camera_clamp_angle = 1.5707963267948966
 max_attach_distance = 5.0
 is_right_side_enabled = true
+lean_amount = 6.0
+lean_speed = 3.0
 start_recover_from = 0.5
 
 [node name="HealthComponent" type="Node" parent="." unique_id=901680601]
@@ -42,6 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=2096345579]
 unique_name_in_owner = true
 current = true
+fov = 90.0
 far = 8000.0
 
 [node name="PickaxeLeft" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1555438760]
@@ -49,6 +52,7 @@ unique_name_in_owner = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=62805225]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.39999998, 0.47012836)
+visible = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeLeft/CSGCombiner3D" unique_id=206791976]
 size = Vector3(0.2, 1, 0.13652344)
@@ -57,11 +61,15 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=224050095 instance=ExtResource("4_gb4gm")]
+transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.0927847e-08, 0, -1.3441114, 0.22471774)
+
 [node name="PickaxeRight" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1907319150]
 unique_name_in_owner = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=2112426431]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.39999998, 0.47012836)
+visible = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeRight/CSGCombiner3D" unique_id=1819930070]
 size = Vector3(0.2, 1, 0.13652344)
@@ -70,13 +78,16 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=1537833269 instance=ExtResource("4_gb4gm")]
+transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.0927847e-08, 0, -1.3441114, 0.22471774)
+
 [node name="PickaxeLeftMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=2042362621]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.2, -1.2)
 
 [node name="PickaxeRightMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=1623287674]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.2, -1.2)
 
 [node name="HitAreaComponent3D" type="Area3D" parent="." unique_id=1490152744]
 collision_layer = 2
