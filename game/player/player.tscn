@@ -83,11 +83,11 @@ transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.092784
 
 [node name="PickaxeLeftMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=2042362621]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.2, -1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.3, -0.9)
 
 [node name="PickaxeRightMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=1623287674]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.2, -1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.3, -0.9)
 
 [node name="Reparenter" type="Node" parent="CameraPivot/Camera3D" unique_id=456315339]
 unique_name_in_owner = true

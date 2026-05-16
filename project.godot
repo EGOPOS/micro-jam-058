@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 InputBuffer="*uid://dsbyw8nb3jqeg"
 Help="*uid://flag5qla2lym"
+Global="*uid://cwpqdqxit0psj"
 
 [input]
 

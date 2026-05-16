@@ -1,5 +1,6 @@
 class_name SellableResource extends StaticBody3D
 
+@export var color: Color
 
 func _ready() -> void:
 	visibility_changed.connect(on_visibility_changed)

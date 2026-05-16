@@ -5,11 +5,6 @@ extends Control
 @onready var cash_count_label: Label = %CashCountLabel
 @onready var items_slots_container: VBoxContainer = %ItemsSlotsContainer
 
-# Текущие деньги игрока (если у тебя есть синглтон игрока, можно связать с ним)
-var player_cash: int = 400:
-	set(value):
-		player_cash = value
-		_update_cash_display()
 
 # Наша «база данных» товаров для этого магазина
 var shop_products: Array[Dictionary] = [
@@ -26,12 +21,12 @@ func _ready() -> void:
 	var viewport = get_viewport()
 	if viewport is SubViewport:
 		viewport.handle_input_locally = true
-	gui_input.connect(func(event): print("Магазин поймал ивент: ", event))
+	Global.cash_changed.connect(_update_cash_display)
 
 # Обновление текста с балансом
 func _update_cash_display() -> void:
 	if cash_count_label:
-		cash_count_label.text = str(player_cash) + " $"
+		cash_count_label.text = str(Global.cash) + " $"
 
 # Генерация слотов в контейнере
 func _build_shop_menu() -> void:
@@ -74,8 +69,8 @@ func _try_purchase(product_data: Dictionary) -> void:
 	var item_name = product_data["name"]
 	var item_id = product_data["id"]
 	
-	if player_cash >= cost:
-		player_cash -= cost # Сеттер сам обновит интерфейс
+	if Global.cash >= cost:
+		Global.cash -= cost # Сеттер сам обновит интерфейс
 		_give_item_to_player(item_id)
 		#print("Куплено: ", item_name, ". Остаток: ", player_cash)
 	else:
