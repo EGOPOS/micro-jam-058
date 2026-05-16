@@ -26,16 +26,24 @@ class_name Player extends CharacterBody3D
 
 @export_group("climbing")
 @export var climb_jump_velocity_multiplier: float = 1.6
-@export var max_climbing_distance: float = 3 # distance from attached point
 @export var max_attach_distance: float = 3
 @export var is_right_side_enabled: bool = false
 @export var lean_amount: float = 3
 @export var lean_speed: float = 1.0
 
+@export_group("resource grabbing")
+@export var max_grab_distance: float = 3
+
 @export_group("stamina")
 @export var max_stamina: float = 5.0
 @export var recover_stamina_delay: float = 0.8
 @export var start_recover_from: float = 0.3
+
+
+@export_group("overweight affect")
+@export var jump_affect_scale: float = 0.8
+@export var stamina_affect_scale: float = 0.8
+
 # for wind sound
 #@export_group("sounds")
 #@export var wind_velocity: float = 3.0
@@ -45,6 +53,8 @@ class_name Player extends CharacterBody3D
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak)
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent))
+
+@onready var backpack_component: BackpackComponent = %BackpackComponent
 
 @onready var camera_pivot: Node3D = %CameraPivot
 @onready var camera: Camera3D = %Camera3D
@@ -58,6 +68,9 @@ class_name Player extends CharacterBody3D
 @onready var pickaxe_right_marker: Marker3D = %PickaxeRightMarker3D
 @onready var pickaxes = [pickaxe_left, pickaxe_right]
 @onready var pickaxe_markers = [pickaxe_left_marker, pickaxe_right_marker]
+
+var interaction_delay: float = 0.1
+var last_interaction_time: int #ticks
 
 var max_jump_buffer: int = 1
 var jump_buffer: int = max_jump_buffer
@@ -73,6 +86,14 @@ var is_climbing: bool = false
 var time_not_climbing: int # ticks
 
 var last_good_pos: Vector3
+
+
+var default_jump_height = 0
+var default_jump_time_to_peak = 0
+var default_jump_time_to_descent = 0
+var default_jump_air_bonus = 0
+var default_max_stamina = 0
+var default_start_recover_from = 0
 
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
@@ -120,7 +141,57 @@ func _ready() -> void:
 	})
 	state_machine.change_state(state_machine.states.Idle)
 	
+	backpack_component.overweight_changed.connect(on_overweight_changed)
+	
 	last_good_pos = position
+	update_defaults()
+
+
+#region Changing values
+func update_defaults():
+	default_jump_height = jump_height
+	default_jump_time_to_peak = jump_time_to_peak
+	default_jump_time_to_descent = jump_time_to_descent
+	default_jump_air_bonus = jump_air_bonus
+	default_max_stamina = max_stamina
+	default_start_recover_from = start_recover_from
+
+
+func apply_defaults():
+	jump_height = default_jump_height
+	jump_time_to_peak = default_jump_time_to_peak
+	jump_time_to_descent = default_jump_time_to_descent
+	jump_air_bonus = default_jump_air_bonus
+	max_stamina = default_max_stamina
+	start_recover_from = default_start_recover_from
+
+
+func update_jump():
+	jump_velocity = ((2.0 * jump_height) / jump_time_to_peak)
+	jump_gravity = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
+	fall_gravity = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent))
+
+
+func on_overweight_changed():
+	apply_defaults()
+	
+	var jmp_mult = pow(jump_affect_scale, backpack_component.get_overweight())
+	multiply_jump(jmp_mult)
+	
+	var stm_mult = pow(jump_affect_scale, backpack_component.get_overweight())
+	multiply_stamina(stm_mult)
+
+func multiply_jump(jmp_mult: float):
+	jump_height *= jmp_mult
+	jump_time_to_peak *= jmp_mult
+	jump_time_to_descent *= jmp_mult
+	jump_air_bonus *= jmp_mult
+	update_jump()
+
+func multiply_stamina(stm_mult: float):
+	max_stamina *= stm_mult
+	start_recover_from *= stm_mult
+#endregion
 
 
 func _physics_process(delta: float) -> void:
@@ -163,6 +234,8 @@ func _input(event: InputEvent):
 	if Input.is_key_pressed(KEY_R):
 		fall_return()
 
+
+
 #region Climbing
 func apply_climb_attaching(delta: float, target_velocity: Vector3, multiplier: float = air_multiplier):
 	velocity = target_velocity
@@ -194,7 +267,6 @@ func restore_stamina(value: float):
 
 func is_can_climb():
 	return stamina > 0
-
 #endregion
 
 func fall_return():

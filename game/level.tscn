@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dp3b80emev0gi" path="res://game/player/player.tscn" id="2_xssv6"]
 [ext_resource type="Texture2D" uid="uid://bdpbk5613dvdd" path="res://addons/godot-prototype-texture/Vector/checker_512x512/checker_black_512x512.svg" id="3_uk5k8"]
 [ext_resource type="Texture2D" uid="uid://cwfql36u1pa07" path="res://addons/godot-prototype-texture/Vector/checker_512x512/checker_white_512x512.svg" id="4_8vjk3"]
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/SellableResource.tscn" id="6_nspj4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uu78k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -774,14 +775,42 @@ shape = SubResource("ConcavePolygonShape3D_toqof")
 [node name="Player" parent="." unique_id=441845844 instance=ExtResource("2_xssv6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4240055, 3.4763775, 0.65440845)
 movement_friction = 10.0
+air_multiplier = 1.0
 jump_release_multiplier = 1.4
-jump_time_to_peak = 0.4
-jump_time_to_descent = 0.3
+jump_time_to_peak = 0.3
+jump_time_to_descent = 0.25
 
 [node name="WaterMeshInstance3D" type="MeshInstance3D" parent="." unique_id=523624817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.187831, 0)
 visible = false
 material_override = SubResource("StandardMaterial3D_8bv7i")
 mesh = SubResource("PlaneMesh_uk5k8")
+
+[node name="SellableResourceComponent" parent="." unique_id=1501890312 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.406759, -0.2086004, -2.0724478)
+
+[node name="SellableResourceComponent2" parent="." unique_id=1160362952 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.250975, -0.18610711, -0.19061932)
+
+[node name="SellableResourceComponent3" parent="." unique_id=1566638428 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4705386, -0.23243058, -5.0980372)
+
+[node name="SellableResourceComponent4" parent="." unique_id=1197255855 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.737915, -0.2534365, -2.255993)
+
+[node name="SellableResourceComponent5" parent="." unique_id=1391550595 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.467844, -0.18391454, -2.1444516)
+
+[node name="SellableResourceComponent6" parent="." unique_id=2103880577 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5366035, -0.20730674, -4.3191466)
+
+[node name="SellableResourceComponent7" parent="." unique_id=76036546 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.565069, -0.2559318, -3.412716)
+
+[node name="SellableResourceComponent8" parent="." unique_id=1421310238 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.035898, -0.21646877, -0.57992727)
+
+[node name="SellableResourceComponent9" parent="." unique_id=96291947 instance=ExtResource("6_nspj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4986463, -0.15601563, 1.0644237)
 
 [editable path="GD_lvl_Test"]

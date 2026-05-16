@@ -1,6 +1,6 @@
 extends Node
 
-func get_camera_center_hit(ray_length: float = 10) -> Dictionary:
+func get_camera_center_hit(ray_length: float = 10, collision_mask = get_collision_mask([1]),  with_areas: bool = false) -> Dictionary:
 	var viewport = get_viewport()
 	var camera = viewport.get_camera_3d()
 	
@@ -20,7 +20,8 @@ func get_camera_center_hit(ray_length: float = 10) -> Dictionary:
 	var space_state = camera.get_world_3d().direct_space_state
 	
 	# 4. Создаем параметры запроса для Godot 4
-	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_to, get_collision_mask([1]))
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_to, collision_mask)
+	query.collide_with_areas = with_areas
 	
 	# Опционально: исключить определенные объекты (например, самого игрока)
 	# query.exclude = [self.get_rid()]

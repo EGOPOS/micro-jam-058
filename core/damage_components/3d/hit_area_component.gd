@@ -4,4 +4,3 @@ class_name HitAreaComponent3D extends Area3D
 
 func damage(attack: Attack):
 	health_component.damage(attack)
-

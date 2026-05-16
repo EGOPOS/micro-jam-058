@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ilce8s613qpc" path="res://game/player/player.gd" id="2_aa75y"]
 [ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_sns1g"]
 [ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
+[ext_resource type="Script" uid="uid://bjeirc3etwa0f" path="res://game/player/backpack_component.gd" id="3_j0mij"]
 [ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
 [ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
 [ext_resource type="Script" uid="uid://1beo4p62aovt" path="res://game/player/states/move.gd" id="6_f5d78"]
@@ -16,11 +17,20 @@
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("2_aa75y")
+jump_height = 1.5
+jump_time_to_peak = 0.4
+jump_time_to_descent = 0.3
 camera_clamp_angle = 1.5707963267948966
+max_attach_distance = 5.0
 is_right_side_enabled = true
+start_recover_from = 0.5
 
 [node name="HealthComponent" type="Node" parent="." unique_id=901680601]
 script = ExtResource("2_sns1g")
+
+[node name="BackpackComponent" type="Node" parent="." unique_id=572175697]
+unique_name_in_owner = true
+script = ExtResource("3_j0mij")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1366250951]
 shape = SubResource("CapsuleShape3D_fjdng")

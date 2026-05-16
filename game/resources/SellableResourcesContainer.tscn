@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://8kqvq76ucxf0"]
+
+[ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="1_gewgh"]
+[ext_resource type="Script" uid="uid://d1hgx10rqyxmh" path="res://game/resources/sellable_resources_container.gd" id="1_u7c5a"]
+[ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_u7c5a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u7c5a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u7c5a"]
+
+[node name="SellableResourcesContainer" type="Node3D" unique_id=144205748]
+script = ExtResource("1_u7c5a")
+
+[node name="HitAreaComponent3D" type="Area3D" parent="." unique_id=1580326680]
+unique_name_in_owner = true
+script = ExtResource("1_gewgh")
+metadata/_custom_type_script = "uid://dju6lwhw5npbm"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitAreaComponent3D" unique_id=1404281730]
+shape = SubResource("BoxShape3D_u7c5a")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=46263700]
+unique_name_in_owner = true
+script = ExtResource("2_u7c5a")
+max_health = 5
+metadata/_custom_type_script = "uid://bnxwefkufbcy2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=477086722]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
+mesh = SubResource("BoxMesh_u7c5a")
