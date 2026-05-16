@@ -1,4 +1,4 @@
-extends PlayerState
+extends PlayerAttachableState
 
 func enter(data):
 	super(data)
@@ -6,6 +6,7 @@ func enter(data):
 	player.reset_jump_buffer()
 
 func physics_update(delta):
+	super(delta)
 	var direction = player.get_direction()
 	
 	if direction != Vector3():

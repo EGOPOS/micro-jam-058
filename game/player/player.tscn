@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://dp3b80emev0gi"]
+
+[ext_resource type="Script" uid="uid://ilce8s613qpc" path="res://game/player/player.gd" id="2_aa75y"]
+[ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_sns1g"]
+[ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
+[ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
+[ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
+[ext_resource type="Script" uid="uid://1beo4p62aovt" path="res://game/player/states/move.gd" id="6_f5d78"]
+[ext_resource type="Script" uid="uid://dlhhnbht63q1a" path="res://game/player/states/jump.gd" id="7_jgft7"]
+[ext_resource type="Script" uid="uid://bb61ht14abdrj" path="res://game/player/states/fall.gd" id="8_fnufp"]
+[ext_resource type="Script" uid="uid://biun4oh7y0v0v" path="res://game/player/states/climb.gd" id="9_5ghna"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjdng"]
+
+[node name="Player" type="CharacterBody3D" unique_id=441845844]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("2_aa75y")
+camera_clamp_angle = 1.5707963267948966
+is_right_side_enabled = true
+
+[node name="HealthComponent" type="Node" parent="." unique_id=901680601]
+script = ExtResource("2_sns1g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1366250951]
+shape = SubResource("CapsuleShape3D_fjdng")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1323500997]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=2096345579]
+unique_name_in_owner = true
+current = true
+far = 8000.0
+
+[node name="PickaxeLeft" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1555438760]
+unique_name_in_owner = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=62805225]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.39999998, 0.47012836)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeLeft/CSGCombiner3D" unique_id=206791976]
+size = Vector3(0.2, 1, 0.13652344)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeLeft/CSGCombiner3D" unique_id=229046744]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
+size = Vector3(0.2, 0.9258423, 0.08231811)
+
+[node name="PickaxeRight" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1907319150]
+unique_name_in_owner = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=2112426431]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.39999998, 0.47012836)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeRight/CSGCombiner3D" unique_id=1819930070]
+size = Vector3(0.2, 1, 0.13652344)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CameraPivot/Camera3D/PickaxeRight/CSGCombiner3D" unique_id=866133980]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
+size = Vector3(0.2, 0.9258423, 0.08231811)
+
+[node name="PickaxeLeftMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=2042362621]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, -1)
+
+[node name="PickaxeRightMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=1623287674]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -1)
+
+[node name="HitAreaComponent3D" type="Area3D" parent="." unique_id=1490152744]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_ha6ty")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitAreaComponent3D" unique_id=1452036249]
+
+[node name="StateMachine" type="Node" parent="." unique_id=2005407787]
+unique_name_in_owner = true
+script = ExtResource("4_qp8qn")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1398744386]
+script = ExtResource("5_0n17r")
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=1335001699]
+script = ExtResource("6_f5d78")
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=2127058796]
+script = ExtResource("7_jgft7")
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=1988834486]
+script = ExtResource("8_fnufp")
+
+[node name="Climb" type="Node" parent="StateMachine" unique_id=1831454152]
+script = ExtResource("9_5ghna")
+
+[node name="PosSaveTimer" type="Timer" parent="." unique_id=103247865]
+wait_time = 6.0
+autostart = true

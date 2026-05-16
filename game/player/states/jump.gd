@@ -7,6 +7,7 @@ func enter(data):
 
 
 func physics_update(delta):
+	super(delta)
 	var direction = player.get_direction()
 	
 	if not Input.is_action_pressed("movement_jump"):

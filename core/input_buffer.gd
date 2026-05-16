@@ -2,6 +2,8 @@ extends Node
 
 var actions = {
 	"movement_jump": 0.05,
+	"mouse_left": 0.05,
+	"mouse_right": 0.05,
 }
 
 var _input_buffer: Array[String]

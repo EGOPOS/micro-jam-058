@@ -1,10 +1,11 @@
-extends PlayerState
+extends PlayerAttachableState
 
 func enter(data):
 	super(data)
 	player.camera_animation_strength = player.camera_animation_air_strength
 
 func physics_update(delta):
+	super(delta)
 	var direction = player.get_direction()
 	
 	if player.is_on_floor():
