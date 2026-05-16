@@ -25,6 +25,11 @@ func physics_update(delta):
 				var attach_hit = Help.get_camera_center_hit(player.max_attach_distance)
 				if not attach_hit.is_empty():
 					player.attached_points[side] = attach_hit
+					if side == "left":
+						player.left_attach_toggled.emit(attach_hit)
+					else:
+						player.right_attach_toggled.emit(attach_hit)
+					
 					if self != states.Climb:
 						change_state(states.Climb)
 	
@@ -36,6 +41,7 @@ func input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interaction") and is_can_interact():
 		player.backpack_component.put_on_floor_from_storage()
 		player.last_interaction_time = get_time()
+
 
 func is_can_interact():
 	return get_left_time(player.last_interaction_time) > player.interaction_delay

@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddor7otj0ylkj"
-path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_BaseColor.png-69938acd2fe0a174681dd94cf1c30c4f.s3tc.ctex"
+uid="uid://rod7ry5vfu18"
+path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png-4bff27f0098c8d57bf836ec201935e2a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "194cb84653ccd9b4bd3f3fab0e55601a"
+"md5": "6563a66569cb793665f6fe66d1e51c3b"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_DefaultMaterial_BaseColor.png"
-dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_BaseColor.png-69938acd2fe0a174681dd94cf1c30c4f.s3tc.ctex"]
+source_file="res://assets/models/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png"
+dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png-4bff27f0098c8d57bf836ec201935e2a.s3tc.ctex"]
 
 [params]
 

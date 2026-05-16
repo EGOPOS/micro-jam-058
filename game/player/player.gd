@@ -96,6 +96,11 @@ var default_max_stamina = 0
 var default_start_recover_from = 0
 var default_max_jump_buffer = 0
 
+
+signal right_attach_toggled(hit)
+signal left_attach_toggled(hit)
+
+
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
 	velocity = velocity.lerp(Vector3(direction.x, 0, direction.z)* movement_speed + Vector3.UP * velocity.y, movement_acceleration * delta * multiplier)
@@ -149,6 +154,10 @@ func _ready() -> void:
 	state_machine.change_state(state_machine.states.Idle)
 	
 	backpack_component.overweight_changed.connect(on_overweight_changed)
+	right_attach_toggled.connect(update_picaxe_transform.bind(false))
+	left_attach_toggled.connect(update_picaxe_transform.bind(true))
+	right_attach_toggled.emit(null)
+	left_attach_toggled.emit(null)
 	
 	last_good_pos = position
 	update_defaults()
@@ -207,24 +216,42 @@ func multiply_stamina(stm_mult: float):
 #endregion
 
 
+func update_picaxe_transform(hit, is_left: bool):
+	var index = int(not is_left)
+	var pickaxe: Node3D = pickaxes[index] 
+	var packaxe_marker = pickaxe_markers[index] 
+	
+	var target_position: Vector3
+	var target_rotation: Vector3
+	
+	if hit == null:
+		target_position = packaxe_marker.global_position
+		target_rotation = packaxe_marker.global_rotation
+		pickaxe.reparent(camera)
+	else:
+		var normal = hit.normal
+		target_position = hit.position - normal * 0.25
+		
+		var up_vector = Vector3.UP
+		if abs(normal.dot(Vector3.UP)) > 0.99:
+			up_vector = Vector3.FORWARD 
+		
+		var target_basis = Basis.looking_at(normal, up_vector, true)
+		if abs(normal.dot(Vector3.UP)) > 0.99:
+			target_basis = target_basis.rotated(Vector3.UP, camera.rotation.y)
+		#else:
+			#target_basis = target_basis.rotated(Vector3.FORWARD, -camera.rotation.y)
+		
+		target_rotation = target_basis.get_euler()
+		
+		pickaxe.reparent(%Reparenter)
+	
+	pickaxe.global_position = target_position
+	pickaxe.global_rotation = target_rotation
+
+
 func _physics_process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))
-	
-	var hits = attached_points.values()
-	for pos_index in hits.size():
-		var target_hit = hits[pos_index]
-		var target_position: Vector3
-		var target_rotation: Vector3
-		
-		if target_hit == null:
-			target_position = pickaxe_markers[pos_index].global_position
-			target_rotation = pickaxe_markers[pos_index].global_rotation
-		else:
-			target_position = hits[pos_index].position
-			target_rotation = Vector3(hits[pos_index].normal).rotated(Vector3.LEFT, deg_to_rad(45))#.rotated(Vector3.RIGHT, deg_to_rad(120))
-			
-		pickaxes[pos_index].global_position = target_position
-		pickaxes[pos_index].global_rotation = target_rotation
 	# for wind sound
 	#if abs(velocity.y) >= wind_velocity:
 		#if not wind_player.playing:

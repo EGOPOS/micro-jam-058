@@ -24,9 +24,11 @@ func physics_update(delta):
 	
 	if player.is_right_unattaching():
 		player.attached_points.right = null
+		player.right_attach_toggled.emit(null)
 	
 	if player.is_left_unattaching():
 		player.attached_points.left = null
+		player.left_attach_toggled.emit(null)
 		
 	if player.is_can_jump() and Input.is_action_just_pressed("movement_jump"):
 		change_state(states.Jump, {
@@ -62,3 +64,5 @@ func exit():
 	player.time_not_climbing = get_time()
 	player.attached_points.left = null
 	player.attached_points.right = null
+	player.right_attach_toggled.emit(null)
+	player.left_attach_toggled.emit(null)
