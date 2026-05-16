@@ -77,7 +77,7 @@ func _try_purchase(product_data: Dictionary) -> void:
 	if player_cash >= cost:
 		player_cash -= cost # Сеттер сам обновит интерфейс
 		_give_item_to_player(item_id)
-		print("Куплено: ", item_name, ". Остаток: ", player_cash)
+		#print("Куплено: ", item_name, ". Остаток: ", player_cash)
 	else:
 		print("Нищеброд! Не хватает денег на: ", item_name, " (Нужно: ", cost, ")")
 

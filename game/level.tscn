@@ -812,7 +812,6 @@ jump_time_to_descent = 0.25
 
 [node name="WaterMeshInstance3D" type="MeshInstance3D" parent="." unique_id=523624817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.187831, 0)
-visible = false
 material_override = SubResource("StandardMaterial3D_8bv7i")
 mesh = SubResource("PlaneMesh_uk5k8")
 
