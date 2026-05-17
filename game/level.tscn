@@ -3,16 +3,32 @@
 [ext_resource type="Script" uid="uid://bbwl68gd2vx40" path="res://game/level.gd" id="1_8bv7i"]
 [ext_resource type="PackedScene" uid="uid://dolvl4pdov0bu" path="res://assets/models/GD_lvl_Test.glb" id="2_8bv7i"]
 [ext_resource type="PackedScene" uid="uid://dp3b80emev0gi" path="res://game/player/player.tscn" id="2_xssv6"]
+[ext_resource type="PackedScene" uid="uid://kslge3kivd4y" path="res://game/resources/duck.tscn" id="3_5c5qw"]
 [ext_resource type="Script" uid="uid://c3j5c5yxbjjw3" path="res://game/resource_spawner.gd" id="3_hjv22"]
 [ext_resource type="Texture2D" uid="uid://bdpbk5613dvdd" path="res://addons/godot-prototype-texture/Vector/checker_512x512/checker_black_512x512.svg" id="3_uk5k8"]
 [ext_resource type="Texture2D" uid="uid://cwfql36u1pa07" path="res://addons/godot-prototype-texture/Vector/checker_512x512/checker_white_512x512.svg" id="4_8vjk3"]
-[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/SellableResource.tscn" id="6_nspj4"]
+[ext_resource type="PackedScene" uid="uid://dlp6xm0noag6f" path="res://game/resources/metal.tscn" id="4_mgnlv"]
+[ext_resource type="PackedScene" uid="uid://dqvk6y6ubd3k3" path="res://game/resources/crate.tscn" id="5_vbfoy"]
+[ext_resource type="PackedScene" uid="uid://dq06i4jtv8ohh" path="res://game/resources/rock.tscn" id="6_i0emn"]
 [ext_resource type="PackedScene" uid="uid://c8syds4251qn0" path="res://game/shop/shop.tscn" id="7_3gsf4"]
 [ext_resource type="PackedScene" uid="uid://csqhrg000q3m6" path="res://game/resources/end_game_resource.tscn" id="9_1565f"]
+[ext_resource type="PackedScene" uid="uid://b82x4k2k3v5u5" path="res://game/story_comics/story_comics.tscn" id="10_ogdhh"]
 
-[sub_resource type="Curve" id="Curve_1565f"]
-_data = [Vector2(0.075718015, 1), 0.0, 0.0, 0, 0, Vector2(0.21409923, 0), 0.0, 0.0, 0, 0, Vector2(0.74934727, 0), 0.0, 0.0, 0, 0, Vector2(0.84334207, 1), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_50vgw"]
+_data = [Vector2(0.6695843, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_0w1ik"]
+_data = [Vector2(0.0043763667, 0), 0.0, 0.0, 0, 0, Vector2(0.5142232, 0.48786843), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_s5juq"]
+_data = [Vector2(0.2997812, 0), 0.0, 0.0, 0, 0, Vector2(0.41794312, 1), 0.0, 0.0, 0, 0, Vector2(0.6827134, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="Curve" id="Curve_vuud0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.25833333, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_hjv22"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -282,18 +298,25 @@ script = ExtResource("1_8bv7i")
 player = NodePath("Player")
 water_node = NodePath("WaterMeshInstance3D")
 high_tide_y = -5.0
-low_tide_y = -50.0
-low_tide_duration = 45.0
+low_tide_y = -25.0
+low_tide_duration = 15.0
 
 [node name="ResourceSpawner" type="Node3D" parent="." unique_id=27796339 node_paths=PackedStringArray("level_meshes", "level_static_body", "resources_container")]
 script = ExtResource("3_hjv22")
+spawn = true
 level_meshes = NodePath("../GD_lvl_Test")
 level_static_body = NodePath("../StaticBody3D")
 spawn_chance_table = Dictionary[PackedScene, float]({
-ExtResource("6_nspj4"): 1.0
+ExtResource("3_5c5qw"): 0.1,
+ExtResource("4_mgnlv"): 0.3,
+ExtResource("5_vbfoy"): 0.02,
+ExtResource("6_i0emn"): 1.0
 })
 spawn_level_table = Dictionary[PackedScene, Curve]({
-ExtResource("6_nspj4"): SubResource("Curve_1565f")
+ExtResource("3_5c5qw"): SubResource("Curve_50vgw"),
+ExtResource("4_mgnlv"): SubResource("Curve_0w1ik"),
+ExtResource("5_vbfoy"): SubResource("Curve_s5juq"),
+ExtResource("6_i0emn"): SubResource("Curve_vuud0")
 })
 resources_container = NodePath("../Resources")
 spawn_max_depth = -320.0
@@ -818,10 +841,18 @@ material_override = SubResource("StandardMaterial3D_8bv7i")
 mesh = SubResource("PlaneMesh_uk5k8")
 
 [node name="Shop" parent="." unique_id=266592243 instance=ExtResource("7_3gsf4")]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -10.888199, -0.51724017, 4.09479)
+transform = Transform3D(-0.8053284, 0, -0.59282875, -0.007656429, 0.9999166, 0.010400878, 0.59277934, 0.012915077, -0.80526125, 7.1778865, -0.30459464, -6.3823433)
 
 [node name="EndGameMarker3D" type="Marker3D" parent="." unique_id=3398954]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.103142, -43.39362, 50.36777)
+
+[node name="StoryComics" parent="." unique_id=1781734787 instance=ExtResource("10_ogdhh")]
+
+[node name="Rock" parent="." unique_id=1501890312 instance=ExtResource("6_i0emn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6813317, 0.35233968, -9.287208)
+
+[node name="Rock2" parent="." unique_id=598181530 instance=ExtResource("6_i0emn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2575661, 0.31644052, -7.5160093)
 
 [editable path="GD_lvl_Test"]

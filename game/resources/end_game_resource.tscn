@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://csqhrg000q3m6"]
 
-[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/SellableResource.tscn" id="1_j13u7"]
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_j13u7"]
 [ext_resource type="Script" uid="uid://bulpdnr8i7rym" path="res://game/resources/end_game_resource.gd" id="2_fptot"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_j13u7"]

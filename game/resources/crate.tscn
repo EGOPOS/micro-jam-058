@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dqvk6y6ubd3k3"]
+
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_f7406"]
+[ext_resource type="PackedScene" uid="uid://dvgjk1y7a8jn" path="res://assets/models/Crate.glb" id="2_oa35n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f7406"]
+size = Vector3(1.9772949, 1.0776367, 1.1372986)
+
+[node name="Crate" unique_id=1501890312 instance=ExtResource("1_f7406")]
+
+[node name="Crate" parent="." index="0" unique_id=1505453243 instance=ExtResource("2_oa35n")]
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=77926579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016235352, 0.48884332, -0.019901395)
+shape = SubResource("BoxShape3D_f7406")

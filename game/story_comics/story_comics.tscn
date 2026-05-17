@@ -1,13 +1,50 @@
-[gd_scene format=3 uid="uid://p3ui1isocx1l"]
+[gd_scene format=3 uid="uid://b82x4k2k3v5u5"]
 
-[ext_resource type="Texture2D" uid="uid://dddwxm2lsokf4" path="res://icon.svg" id="1_3a6wg"]
+[ext_resource type="Script" uid="uid://cx5kmkjrwolhr" path="res://game/story_comics/story_comics.gd" id="1_story"]
+[ext_resource type="Texture2D" uid="uid://beai17bnby6e4" path="res://assets/pictures/4674764764.png" id="2_4xufv"]
+[ext_resource type="Texture2D" uid="uid://bds46wdhnym8w" path="res://assets/pictures/Без имени.png" id="3_g6t1y"]
 
-[node name="StoryComics" type="Node" unique_id=866916602]
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1862614010]
+[node name="StoryComics" type="Control" unique_id=1781734787]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_3a6wg")
+script = ExtResource("1_story")
+frames = Array[Texture]([ExtResource("2_4xufv"), ExtResource("3_g6t1y")])
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1992422733]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=744642518]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=1086938871]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -215.0
+offset_top = -43.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Press anywhere to continue"
+horizontal_alignment = 2

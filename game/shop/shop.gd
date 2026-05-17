@@ -16,7 +16,14 @@ func _ready() -> void:
 		if b is Player and interface_container.visible:
 			display_interaction_area.interacted.emit(b)
 	)
+	Global.cash_changed.connect(update_screen)
 
+func update_screen():
+		interface_container.show()
+		interface_container.modulate.a = 0
+		await get_tree().create_timer(.1).timeout
+		interface_container.modulate.a = 1
+		interface_container.hide()
 
 func on_display_interacted(player: Player):
 	if not interface_container.visible:

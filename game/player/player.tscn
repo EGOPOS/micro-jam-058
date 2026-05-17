@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dlhhnbht63q1a" path="res://game/player/states/jump.gd" id="7_jgft7"]
 [ext_resource type="Script" uid="uid://bb61ht14abdrj" path="res://game/player/states/fall.gd" id="8_fnufp"]
 [ext_resource type="Script" uid="uid://biun4oh7y0v0v" path="res://game/player/states/climb.gd" id="9_5ghna"]
-[ext_resource type="PackedScene" uid="uid://dwhlk4ywmgaoi" path="res://game/player_hud.tscn" id="12_uv2nh_hud"]
+[ext_resource type="PackedScene" uid="uid://dwhlk4ywmgaoi" path="res://game/player/player_hud.tscn" id="12_uv2nh_hud"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjdng"]
 

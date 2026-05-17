@@ -2,12 +2,9 @@
 
 [ext_resource type="Script" uid="uid://qg8hfeogly03" path="res://game/resources/sellable_resource.gd" id="1_1fs5j"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_dd0yf"]
-
 [node name="SellableResourceComponent" type="StaticBody3D" unique_id=1501890312]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_1fs5j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=77926579]
-shape = SubResource("SphereShape3D_dd0yf")

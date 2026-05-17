@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dwhlk4ywmgaoi"]
 
-[ext_resource type="Script" uid="uid://dhfg8e1rn5g3j" path="res://game/player_hud.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dhfg8e1rn5g3j" path="res://game/player/player_hud.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://cd2mey8cklqoa" path="res://assets/materials/shaders/vignette.gdshader" id="2_tc3lc"]
 [ext_resource type="Shader" uid="uid://c3gg3o2dbejea" path="res://assets/materials/shaders/bip.gdshader" id="3_1nsen"]
-[ext_resource type="Script" uid="uid://csjk6bfsixcyd" path="res://game/blink_shader_rect.gd" id="4_pxo6l"]
+[ext_resource type="Script" uid="uid://csjk6bfsixcyd" path="res://game/player/blink_shader_rect.gd" id="4_pxo6l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1nsen"]
 shader = ExtResource("2_tc3lc")

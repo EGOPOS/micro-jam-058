@@ -20,6 +20,7 @@ extends Node3D
 @export var start_spawn_y: float = -5.0
 @export var spacing: float = 3
 @export var spawn_max_depth: float = -25.0
+@export var spawn_radius: float = 125
 @export var spawn_curve: Curve
 @export var resource_count: int = 400
 
@@ -54,6 +55,9 @@ func fill_resources_below_y(spawn_from: float, spawn_to: float, spacing: float, 
 			var z: float = bounds.position.z + j * spacing
 			x += randf() * spacing
 			z += randf() * spacing
+			
+			if Vector2(x,z).length() > spawn_radius:
+				continue
 			
 			# Пускаем луч сверху вниз от spawn_from
 			var ray_origin := Vector3(x, spawn_from + 1.0, z)

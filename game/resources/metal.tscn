@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dlp6xm0noag6f"]
+
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_x4rcj"]
+[ext_resource type="PackedScene" uid="uid://nriec7bnfvqv" path="res://assets/models/Metal.glb" id="2_pdu5s"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x4rcj"]
+height = 0.5909424
+radius = 1.2387695
+
+[node name="Metal" unique_id=1501890312 instance=ExtResource("1_x4rcj")]
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018981934, 0)
+shape = SubResource("CylinderShape3D_x4rcj")
+
+[node name="Metal" parent="." index="1" unique_id=1927933260 instance=ExtResource("2_pdu5s")]

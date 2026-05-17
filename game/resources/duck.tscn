@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://kslge3kivd4y"]
+
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_r1qvr"]
+[ext_resource type="PackedScene" uid="uid://d3174ryywd8o3" path="res://assets/models/Duck.glb" id="2_ywx7d"]
+[ext_resource type="PackedScene" uid="uid://cijrggfaipn65" path="res://assets/models/Duck2.glb" id="3_yvric"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_r1qvr"]
+radius = 0.3398158
+
+[node name="Duck" unique_id=1501890312 instance=ExtResource("1_r1qvr")]
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2099737, 0)
+shape = SubResource("SphereShape3D_r1qvr")
+
+[node name="Duck2" parent="." index="1" unique_id=135804941 instance=ExtResource("2_ywx7d")]
+
+[node name="Duck" parent="Duck2" index="0" unique_id=1497278791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Duck3" parent="." index="2" unique_id=506433016 instance=ExtResource("3_yvric")]
+
+[node name="Duck" parent="Duck3" index="0" unique_id=556684175]
+transform = Transform3D(0.12484225, 0, 0, 0, 0.12484225, 0, 0, 0, 0.12484225, 0, 0, 0)
+
+[editable path="Duck2"]
+[editable path="Duck3"]

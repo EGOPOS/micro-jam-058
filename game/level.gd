@@ -61,6 +61,7 @@ func _process(delta: float) -> void:
 	var gloal_wl = water_node.global_position.y
 	if player.global_position.y < gloal_wl:
 		player.velocity += Vector3.UP * (gloal_wl - player.global_position.y) * player_from_water_power * delta
+		player.velocity = player.velocity.clampf(-40, 40)
 		
 		player.restore_stamina(delta * 0.1)
 		

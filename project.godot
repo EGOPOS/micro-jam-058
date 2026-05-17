@@ -19,11 +19,15 @@ run/main_scene="uid://crujqisamrlts"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://djdn144ovtyrx"
+
 [autoload]
 
 InputBuffer="*uid://dsbyw8nb3jqeg"
 Help="*uid://flag5qla2lym"
-Global="*uid://cwpqdqxit0psj"
+Global="*res://core/Global.gd"
 
 [global_group]
 

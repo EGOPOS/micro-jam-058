@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dq06i4jtv8ohh"]
+
+[ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_2uo7d"]
+[ext_resource type="PackedScene" uid="uid://dix7hgncmsmip" path="res://assets/models/Rock.glb" id="2_t7do2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2uo7d"]
+radius = 0.8432984
+
+[node name="Rock" unique_id=1501890312 instance=ExtResource("1_2uo7d")]
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
+shape = SubResource("SphereShape3D_2uo7d")
+
+[node name="Rock" parent="." index="1" unique_id=183874784 instance=ExtResource("2_t7do2")]
