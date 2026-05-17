@@ -11,14 +11,18 @@ extends Node3D
 @export var high_tide_y: float = 0.0
 @export var low_tide_y: float = -5.0
 @export var high_tide_duration: float = 10.0 # Время, сколько вода побудет ВНИЗУ (в отливе)
-@export var low_tide_duration: float = 10.0 # Этот экспорт теперь не используется для автоматического спуска
+@export var low_tide_duration: float = 10.0 
 @export var transition_duration: float = 2.0
 @export var ease_curve: Curve
+var timer_multiplier: float = 1.0
 
 @onready var end_game_marker: Marker3D = %EndGameMarker3D
 @onready var end_game_resource: SellableResource = %EndGameResource
 
 @onready var start_tides_interaction_area: InteractionArea = %StartTidesInteractionArea
+
+# Наш локальный менеджер звуков
+@onready var sfx_handler: SfxHandler = $SfxHandler 
 
 # Внутренние переменные
 var _timer: float = 0.0
@@ -33,6 +37,9 @@ var _tides_active: bool = false
 
 var drop_resource_timer: float = 0.0
 var drop_resource_rate: float = 0.5
+
+# Ссылка на зацикленный плеер звука насоса
+var _sucker_loop_player: AudioStreamPlayer3D = null
 
 func _ready() -> void:
 	Global.level = self
@@ -49,10 +56,17 @@ func _ready() -> void:
 	_start_y = water_node.position.y
 	_target_y = high_tide_y
 	water_node.position.y = high_tide_y
+	
+	_sucker_loop_player = sfx_handler.get_player("Suck")
+	if _sucker_loop_player:
+		_sucker_loop_player.volume_db = -80.0 # Полная тишина на старте
+		_sucker_loop_player.play()
+		
+		# Привязываем звук СТРОГО к позиции кнопки/рычага насоса, чтобы он не двигался
+		_sucker_loop_player.global_position = $StartTidesButton.global_position
 
 
 func on_player_start_tides_interated(player: Player) -> void:
-	# Если вода УЖЕ уходит, приливает или стоит внизу — кнопку нажимать нельзя
 	if _tides_active or _transitioning or not _is_high_tide:
 		return
 	
@@ -80,19 +94,19 @@ func _process(delta: float) -> void:
 	
 	drop_resource_timer += delta
 	
-	# Если цикл не запущен игроком — ничего с движением воды не делаем
+	# --- ЗВУКОВОЙ ПРОЦЕССОР НАСОСА ---
+	_process_sucker_sound(delta)
+	# ---------------------------------
+	
 	if not _tides_active:
 		return
 		
-	# Если вода сейчас движется (вверх или вниз)
 	if _transitioning:
 		_update_transition(delta)
 		return
 		
-	# Если движение завершилось, мы проверяем таймер нахождения ВНИЗУ
-	# Вода автоматически начнет подниматься только если она сейчас в состоянии отлива (низко)
 	if not _is_high_tide:
-		_timer += delta
+		_timer += delta * timer_multiplier
 		if _timer >= high_tide_duration:
 			print("Время отлива вышло. Вода возвращается обратно наверх...")
 			_start_transition()
@@ -103,7 +117,6 @@ func _start_transition() -> void:
 	_transition_timer = 0.0
 	_start_y = water_node.position.y
 	
-	# Меняем состояние
 	_is_high_tide = not _is_high_tide
 	_target_y = high_tide_y if _is_high_tide else low_tide_y
 	
@@ -111,16 +124,14 @@ func _start_transition() -> void:
 
 
 func _update_transition(delta: float) -> void:
-	_transition_timer += delta
+	_transition_timer += delta * timer_multiplier
 	
 	if _transition_timer >= transition_duration:
 		_transitioning = false
 		water_node.position.y = _target_y
 		
-		# ФИКС: Если вода вернулась НАВЕРХ (высокий прилив), глушим цикл до следующего нажатия
 		if _is_high_tide:
 			_tides_active = false
-			
 			$StartTidesButton/CSGCylinder3D.transparency = 0
 			
 		return
@@ -133,6 +144,22 @@ func _update_transition(delta: float) -> void:
 	
 	var new_y: float = lerp(_start_y, _target_y, progress)
 	water_node.position.y = new_y
+
+
+## Логика плавного изменения громкости неподвижного насоса
+func _process_sucker_sound(delta: float) -> void:
+	if not _sucker_loop_player:
+		return
+		
+	# Насос должен гудеть на полную (0 dB), пока активна фаза откачки.
+	# Когда вода вернулась и механизм отключился, уводим громкость в тишину (-80 dB)
+	var target_volume: float = -80.0
+	
+	if _tides_active:
+		target_volume = 0.0 # Отрегулируй это значение, если в игре гудит слишком громко
+		
+	# Плавное нарастание и затухание гула (без резких щелчков)
+	_sucker_loop_player.volume_db = move_toward(_sucker_loop_player.volume_db, target_volume, delta * 35.0)
 
 
 func get_current_water_level() -> float:

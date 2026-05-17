@@ -21,6 +21,9 @@ func physics_update(delta):
 			if not resource_hit.is_empty() and is_can_interact() and player.backpack_component.is_can_put():
 				player.backpack_component.put_to_storage(resource_hit.collider)
 				player.last_interaction_time = get_time()
+				
+				# SOUND
+				player.sfx_handler.play("Pickup")
 			
 			if resource_hit.is_empty():
 				# Climbing
@@ -43,6 +46,8 @@ func input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("throw") and is_can_interact():
 		player.backpack_component.put_on_floor_from_storage()
 		player.last_interaction_time = get_time()
+		# SOUND
+		player.sfx_handler.play("Drop")
 
 
 func is_can_interact():

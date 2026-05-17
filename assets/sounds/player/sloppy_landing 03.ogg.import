@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://4eaa5se2j3ki"
+path="res://.godot/imported/sloppy_landing 03.ogg-64ef7128c1a67f26849bc6a8b764d3dd.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/player/sloppy_landing 03.ogg"
+dest_files=["res://.godot/imported/sloppy_landing 03.ogg-64ef7128c1a67f26849bc6a8b764d3dd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

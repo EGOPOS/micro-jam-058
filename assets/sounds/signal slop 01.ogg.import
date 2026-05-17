@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://0rxuel8sxbqc"
+path="res://.godot/imported/signal slop 01.ogg-38801d996362b44032e2b9236c81996e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/signal slop 01.ogg"
+dest_files=["res://.godot/imported/signal slop 01.ogg-38801d996362b44032e2b9236c81996e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -12,8 +12,69 @@
 [ext_resource type="Script" uid="uid://bb61ht14abdrj" path="res://game/player/states/fall.gd" id="8_fnufp"]
 [ext_resource type="Script" uid="uid://biun4oh7y0v0v" path="res://game/player/states/climb.gd" id="9_5ghna"]
 [ext_resource type="PackedScene" uid="uid://dwhlk4ywmgaoi" path="res://game/player/player_hud.tscn" id="12_uv2nh_hud"]
+[ext_resource type="Script" uid="uid://cy57umfi0ubrs" path="res://core/sfx_handler.gd" id="13_n270p"]
+[ext_resource type="AudioStream" uid="uid://bxki4xbwl31u0" path="res://assets/sounds/climbing/slop_hit 01.ogg" id="14_usp30"]
+[ext_resource type="AudioStream" uid="uid://c3gsf4gmec31f" path="res://assets/sounds/climbing/slop_hit 02.ogg" id="15_0e4oy"]
+[ext_resource type="AudioStream" uid="uid://b7c4q1ju45n88" path="res://assets/sounds/climbing/slop_hit 03.ogg" id="16_eeltd"]
+[ext_resource type="AudioStream" uid="uid://bgv7b18b1q4mf" path="res://assets/sounds/climbing/slop_hit 04.ogg" id="17_088ty"]
+[ext_resource type="AudioStream" uid="uid://dke6qd4i0dmgm" path="res://assets/sounds/climbing/slop_hit 05.ogg" id="18_epc1c"]
+[ext_resource type="AudioStream" uid="uid://bg4hgmhx3cxrt" path="res://assets/sounds/climbing/slop_recal 01.ogg" id="19_0e4oy"]
+[ext_resource type="AudioStream" uid="uid://dxpoxawu5x1n1" path="res://assets/sounds/player/slops 01.ogg" id="20_brh81"]
+[ext_resource type="AudioStream" uid="uid://byej14yotg1wq" path="res://assets/sounds/player/slops 02.mp3" id="21_ib3u0"]
+[ext_resource type="AudioStream" uid="uid://deixs51acc4vb" path="res://assets/sounds/player/slops 03.ogg" id="22_bp242"]
+[ext_resource type="AudioStream" uid="uid://bm5ory4lwqncp" path="res://assets/sounds/player/slops 04.ogg" id="23_cgi3i"]
+[ext_resource type="AudioStream" uid="uid://jxa4xew1ax1b" path="res://assets/sounds/player/slops 05.ogg" id="24_y6drd"]
+[ext_resource type="AudioStream" uid="uid://cegyibllnl2wo" path="res://assets/sounds/player/sloppy_landing 01.ogg" id="25_w24bm"]
+[ext_resource type="AudioStream" uid="uid://bkawm7mdxpxlb" path="res://assets/sounds/player/sloppy_landing 02.ogg" id="26_22cju"]
+[ext_resource type="AudioStream" uid="uid://4eaa5se2j3ki" path="res://assets/sounds/player/sloppy_landing 03.ogg" id="27_wrff0"]
+[ext_resource type="AudioStream" uid="uid://cms5opmrwdd07" path="res://assets/sounds/player/sloppy_landing 04.ogg" id="28_n0jev"]
+[ext_resource type="AudioStream" uid="uid://ba3ou0u2dymxu" path="res://assets/sounds/player/sloppy_landing 05.ogg" id="29_uv21l"]
+[ext_resource type="AudioStream" uid="uid://dv7fkubq1afej" path="res://assets/sounds/player/Wind_Fall.wav" id="30_22cju"]
+[ext_resource type="AudioStream" uid="uid://t14wpnnb07yk" path="res://assets/sounds/player/pickup_slop 01.mp3" id="31_n0jev"]
+[ext_resource type="AudioStream" uid="uid://bfp6xueb3pmxn" path="res://assets/sounds/player/drop_slop 01.ogg" id="32_uv21l"]
+[ext_resource type="AudioStream" uid="uid://bsdk1mwbk6f47" path="res://assets/sounds/water/sloppy_water_landing 01.ogg" id="33_cy4e0"]
+[ext_resource type="AudioStream" uid="uid://dxmle4jv52u3a" path="res://assets/sounds/water/sloppy_water_landing 02.ogg" id="34_x6a6n"]
+[ext_resource type="AudioStream" uid="uid://das6kkyb4auu1" path="res://assets/sounds/water/sloppy_water_contact 00.ogg" id="35_bdb11"]
+[ext_resource type="AudioStream" uid="uid://0rxuel8sxbqc" path="res://assets/sounds/signal slop 01.ogg" id="36_x6a6n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjdng"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kjljb"]
+random_pitch = 1.0717734
+random_volume_offset_db = 3.0
+streams_count = 5
+stream_0/stream = ExtResource("14_usp30")
+stream_1/stream = ExtResource("15_0e4oy")
+stream_2/stream = ExtResource("16_eeltd")
+stream_3/stream = ExtResource("17_088ty")
+stream_4/stream = ExtResource("18_epc1c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w24bm"]
+random_pitch = 1.0717734
+random_volume_offset_db = 3.0
+streams_count = 5
+stream_0/stream = ExtResource("20_brh81")
+stream_1/stream = ExtResource("21_ib3u0")
+stream_2/stream = ExtResource("22_bp242")
+stream_3/stream = ExtResource("23_cgi3i")
+stream_4/stream = ExtResource("24_y6drd")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qxyrc"]
+random_pitch = 1.0717734
+random_volume_offset_db = 3.0
+streams_count = 5
+stream_0/stream = ExtResource("25_w24bm")
+stream_1/stream = ExtResource("26_22cju")
+stream_2/stream = ExtResource("27_wrff0")
+stream_3/stream = ExtResource("28_n0jev")
+stream_4/stream = ExtResource("29_uv21l")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p3uph"]
+random_pitch = 1.0717734
+random_volume_offset_db = 4.0
+streams_count = 2
+stream_0/stream = ExtResource("33_cy4e0")
+stream_1/stream = ExtResource("34_x6a6n")
 
 [node name="Player" type="CharacterBody3D" unique_id=441845844]
 collision_layer = 2
@@ -28,6 +89,8 @@ max_attach_distance = 5.0
 lean_amount = 6.0
 lean_speed = 3.0
 start_recover_from = 0.5
+wind_velocity = 7.0
+wind_max_db = 5.0
 death_fall_velocity = -60.0
 
 [node name="HealthComponent" type="Node" parent="." unique_id=901680601]
@@ -127,3 +190,55 @@ autostart = true
 
 [node name="PlayerHUD" parent="." unique_id=1113211450 instance=ExtResource("12_uv2nh_hud")]
 unique_name_in_owner = true
+
+[node name="SfxHandler" type="Node3D" parent="." unique_id=259722222]
+unique_name_in_owner = true
+script = ExtResource("13_n270p")
+
+[node name="Right" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1713827149]
+stream = SubResource("AudioStreamRandomizer_kjljb")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Left" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1028653701]
+stream = SubResource("AudioStreamRandomizer_kjljb")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Unattach" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=979819024]
+stream = ExtResource("19_0e4oy")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Step" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=498751560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = SubResource("AudioStreamRandomizer_w24bm")
+
+[node name="Land" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1104087664]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = SubResource("AudioStreamRandomizer_qxyrc")
+
+[node name="Wind" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=837599599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("30_22cju")
+
+[node name="Pickup" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=42172526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("31_n0jev")
+
+[node name="Drop" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=870821843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("32_uv21l")
+
+[node name="WaterIn" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1644524810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = SubResource("AudioStreamRandomizer_p3uph")
+
+[node name="WaterOut" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1579569035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("35_bdb11")
+
+[node name="Radar" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=927071219]
+stream = ExtResource("36_x6a6n")
+volume_db = -30.0
+max_distance = 400.0

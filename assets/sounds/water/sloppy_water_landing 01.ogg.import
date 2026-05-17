@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bsdk1mwbk6f47"
+path="res://.godot/imported/sloppy_water_landing 01.ogg-e1180fb2f8379b37155d14e74d3d4c19.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/water/sloppy_water_landing 01.ogg"
+dest_files=["res://.godot/imported/sloppy_water_landing 01.ogg-e1180fb2f8379b37155d14e74d3d4c19.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

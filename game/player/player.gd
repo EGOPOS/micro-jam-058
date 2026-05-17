@@ -49,11 +49,12 @@ class_name Player extends CharacterBody3D
 @export var jump_affect_scale: float = 0.8
 @export var stamina_affect_scale: float = 0.8
 
-# for wind sound
-#@export_group("sounds")
-#@export var wind_velocity: float = 3.0
-#@export var wind_max_db: float = 0.0
-#@export var wind_min_db: float = -29.0
+ #for wind sound
+@export_group("sounds")
+@export var wind_velocity: float = 3.0
+@export var wind_max_db: float = 0.0
+@export var wind_min_db: float = -29.0
+@export var step_rate: float = 0.1
 
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak)
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
@@ -75,6 +76,7 @@ class_name Player extends CharacterBody3D
 @onready var pickaxe_markers = [pickaxe_left_marker, pickaxe_right_marker]
 
 @onready var hud: PlayerHUD = %PlayerHUD
+@onready var sfx_handler: SfxHandler = %SfxHandler
 
 var interaction_delay: float = 0.1
 var last_interaction_time: int #ticks
@@ -98,7 +100,9 @@ var time_not_climbing: int # ticks
 
 @export var death_fall_velocity: float = -20.0
 var last_good_pos: Vector3
+var _was_in_water: bool = false # Запоминаем состояние с прошлого кадра
 
+var step_timer: float = 0
 
 var default_jump_height = 0
 var default_jump_time_to_peak = 0
@@ -113,6 +117,7 @@ signal right_attach_toggled(hit)
 signal left_attach_toggled(hit)
 
 static var is_blocked: bool = false
+var is_respawning: bool = false
 
 
 #region movement methods
@@ -169,10 +174,15 @@ func _ready() -> void:
 	state_machine.change_state(state_machine.states.Idle)
 	
 	backpack_component.overweight_changed.connect(on_overweight_changed)
-	right_attach_toggled.connect(update_picaxe_transform.bind(false))
-	left_attach_toggled.connect(update_picaxe_transform.bind(true))
+	right_attach_toggled.connect(update_pickaxe_transform.bind(false))
+	left_attach_toggled.connect(update_pickaxe_transform.bind(true))
 	right_attach_toggled.emit(null)
 	left_attach_toggled.emit(null)
+	
+	# SOUND
+	right_attach_toggled.connect(on_attached.bind(false))
+	left_attach_toggled.connect(on_attached.bind(true))
+	
 	
 	last_good_pos = position
 	update_defaults()
@@ -182,6 +192,51 @@ func _ready() -> void:
 	
 	Global.player = self
 
+
+# SOUND
+func on_attached(hit, is_left):
+	var sfx = ("Left" if is_left else "Right") if hit != null else "Unattach"
+	var pos = hit.position if hit != null else global_position
+	sfx_handler.get_player(sfx).global_position = pos
+	
+	sfx_handler.play(sfx)
+	
+func step_process(delta: float):
+	step_timer += delta
+	if step_timer > step_rate:
+		step_timer = 0
+		sfx_handler.play("Step")
+
+# Вызывать в _process или _physics_process игрока
+func water_sound_process(delta: float, current_water_level: float):
+	# Проверяем, находится ли центр (или ноги) игрока ниже уровня воды
+	var is_in_water: bool = global_position.y < current_water_level
+	
+	# ЭФФЕКТ ПОГРУЖЕНИЯ (Вход в воду / Приземление)
+	if is_in_water and not _was_in_water:
+		# Спавним звук в ногах игрока на уровне поверхности воды
+		var splash_pos = global_position
+		splash_pos.y = current_water_level
+		
+		sfx_handler.get_player("WaterIn").global_position = splash_pos
+		sfx_handler.play("WaterIn")
+		
+	# ЭФФЕКТ ВЫНЫРИВАНИЯ (Выход из воды)
+	elif not is_in_water and _was_in_water:
+		var splash_pos = global_position
+		splash_pos.y = current_water_level
+		
+		sfx_handler.get_player("WaterOut").global_position = splash_pos
+		sfx_handler.play("WaterOut")
+		
+	# Сохраняем текущее состояние для следующего кадра
+	_was_in_water = is_in_water
+
+#func water_step_process(delta: float):
+	#step_timer += delta
+	#if step_timer > step_rate * 1.3:
+		#step_timer = 0
+		#sfx_handler.play("WaterSwim")
 
 #region Changing values
 func update_defaults():
@@ -240,7 +295,7 @@ func multiply_stamina(stm_mult: float):
 # Храним ссылки на активные твины для каждой кирки, чтобы они не конфликтовали
 var pickaxe_tweens: Dictionary = {}
 
-func update_picaxe_transform(hit, is_left: bool):
+func update_pickaxe_transform(hit, is_left: bool):
 	var index = int(not is_left)
 	var pickaxe: Node3D = pickaxes[index] 
 	var packaxe_marker = pickaxe_markers[index] 
@@ -307,9 +362,8 @@ func update_picaxe_transform(hit, is_left: bool):
 				pickaxe.global_rotation.z = lerp_angle(start_rotation.z, target_rotation.z, weight),
 			0.0, 1.0, 0.2
 		).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-			
-		# Опционально: делаем легкий "отскок" или микро-тряску при ударе
-		# Для этого параллельно можно вызвать метод тряски или пустить партиклы
+		
+		
 
 func _process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))
@@ -321,11 +375,19 @@ var last_velocity_y: float = 0.0
 func _physics_process(delta: float) -> void:
 	# Проверка приземления
 	if is_on_floor() and not was_on_floor:
-		if last_velocity_y < -5.0: 
+		if last_velocity_y < -5.0:
+			# SOUND
+			sfx_handler.play("Land")
+			
 			if last_velocity_y < death_fall_velocity:
 				fall_return()
 			else:
 				trigger_fall_shake(last_velocity_y)
+	
+	if is_on_floor() and velocity.length() > 3:
+		# SOUND
+		step_process(delta * remap(velocity.length(), 0, 20, 0, 1))
+	water_sound_process(delta, Global.level.get_current_water_level())
 
 	if not is_on_floor() and velocity.y < -5.0:
 		# Считаем интенсивность от 0.0 до 1.0 на основе текущей (!) скорости
@@ -368,6 +430,18 @@ func _physics_process(delta: float) -> void:
 	
 	last_velocity_y = velocity.y
 	was_on_floor = is_on_floor()
+	
+	
+	var wind_player = sfx_handler.get_player("Wind")
+	if sign(velocity.y) == -1 and abs(velocity.y) >= wind_velocity:
+		if not wind_player.playing:
+			wind_player.play()
+		wind_player.volume_db = min(abs(velocity.y) + wind_min_db, wind_max_db)
+	else:
+		wind_player.volume_db = lerp(wind_player.volume_db, wind_min_db, delta * 6.0)
+		if round(wind_player.volume_db) == wind_min_db:
+			wind_player.playing = false
+
 
 func trigger_fall_shake(fall_velocity: float) -> void:
 	if not camera: return
@@ -463,16 +537,30 @@ func is_can_climb():
 #endregion
 
 func fall_return():
+	# Защита от двойного вызова (чтобы экран не завис в черноте)
+	if is_respawning:
+		return
+	is_respawning = true
+	
 	drop_resources()
 	Fade.fade_out(.3)
 	
-	await get_tree().create_timer(.15).timeout
-	create_tween().tween_method(func(a):
-			global_position = last_good_pos,
-		0, 100, .15)
-	await get_tree().create_timer(.15).timeout
+	# Ждем полного затемнения экрана (0.3 секунды)
+	await get_tree().create_timer(.3).timeout
 	
+	# ТЕЛЕПОРТАЦИЯ: мгновенно меняем позицию
+	global_position = last_good_pos
+	
+	# СБРОС ФИЗИКИ: обязательно обнуляем скорость, иначе игрок "продолжит падать" на новом месте
+	velocity = Vector3.ZERO
+	last_velocity_y = 0.0
+	
+	# Ждем небольшую паузу перед осветлением
+	await get_tree().create_timer(.15).timeout
 	Fade.fade_in(.3)
+	
+	# Снимаем блокировку
+	is_respawning = false
 
 func drop_resources(count: int = -1):
 	var drop_center = global_position

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bm5ory4lwqncp"
+path="res://.godot/imported/slops 04.ogg-8cd6d516aa2db7ad7af5d2fe6f15edfb.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/player/slops 04.ogg"
+dest_files=["res://.godot/imported/slops 04.ogg-8cd6d516aa2db7ad7af5d2fe6f15edfb.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

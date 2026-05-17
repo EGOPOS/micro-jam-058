@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bxki4xbwl31u0"
+path="res://.godot/imported/slop_hit 01.ogg-7540c941d229f816460240c8ed5ae90a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/climbing/slop_hit 01.ogg"
+dest_files=["res://.godot/imported/slop_hit 01.ogg-7540c941d229f816460240c8ed5ae90a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

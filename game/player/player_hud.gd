@@ -16,6 +16,11 @@ var target_resource: SellableResource
 var player: Player
 var backpack_comp: Node
 
+# --- ПЕРЕМЕННЫЕ ДЛЯ ЗВУКА РАДАРА ---
+## Таймер для отсчёта времени между пиками радара
+var _radar_sound_timer: float = 0.0
+# -----------------------------------
+
 func _ready() -> void:
 	await get_tree().process_frame
 	player = Global.player
@@ -29,7 +34,7 @@ func _ready() -> void:
 	target_resource = get_tree().get_first_node_in_group("endgame")
 	radar_container.hide()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if player:
 		stamina_bar.max_value = player.max_stamina
 		stamina_bar.value = player.stamina
@@ -40,7 +45,24 @@ func _process(_delta: float) -> void:
 		var max_speed: float = 10
 		var speed = remap(distance, 0.0, 100.0, 0.0, max_speed)
 		speed = clamp(speed, 0, max_speed)
-		blink_shader_rect.target_speed = max(1, max_speed - speed)
+		
+		# Рассчитываем частоту для шейдера
+		var pulse_frequency = max(1, max_speed - speed)
+		blink_shader_rect.target_speed = pulse_frequency
+		
+		# --- ЛОГИКА ЗВУКА РАДАРА ---
+		# Переводим частоту в интервал времени (задержку) между пиками.
+		# Чем больше pulse_frequency (ближе к цели), тем меньше задержка.
+		var sound_delay: float = 1.0 / (pulse_frequency * 0.5) 
+		
+		_radar_sound_timer += delta
+		if _radar_sound_timer >= sound_delay:
+			_radar_sound_timer = 0.0
+			player.sfx_handler.play("Radar")
+		# ---------------------------
+	else:
+		# Если радар выключили, сбрасываем таймер, чтобы при включении он пикнул сразу
+		_radar_sound_timer = 0.0
 
 
 func update_dots() -> void:

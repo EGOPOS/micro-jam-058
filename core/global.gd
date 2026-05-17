@@ -32,14 +32,32 @@ func _ready() -> void:
 
 
 func _on_endgame_founded():
-	player.is_blocked = true
+	#player.is_blocked = true
+	player.hud.radar_container.hide()
 	
-	Fade.fade_out(1.0)
-	await get_tree().create_timer(1.0).timeout
-	Fade.fade_in(1.0)
+	#Fade.fade_out(1.0)
+	#await get_tree().create_timer(1.0).timeout
+	#Fade.fade_in(1.0)
 	
-	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
-	get_tree().change_scene_to_file("res://game/credits/credits.tscn")
+	level.low_tide_y -= 500
+	level.transition_duration = 5
+	
+	#if level._is_high_tide or (level._transitioning and level._target_y == level.high_tide_y):
+	# Принудительно включаем режим отлива
+	level._is_high_tide = false
+	level._target_y = level.low_tide_y
+	
+	# Запускаем переход заново из текущей точки, где бы ни находилась вода
+	level._transitioning = true
+	level._transition_timer = 0.0
+	level._start_y = level.water_node.position.y
+	level._timer = 0.0
+	
+	await get_tree().create_timer(level.transition_duration).timeout
+	level.timer_multiplier = 0.0
+	
+	#DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+	#get_tree().change_scene_to_file("res://game/credits/credits.tscn")
 
 
 func second_pickaxe_callback():

@@ -21,11 +21,14 @@ func _ready() -> void:
 
 
 func update_screen():
-		interface_container.show()
-		interface_container.modulate.a = 0
-		await get_tree().create_timer(.1).timeout
-		interface_container.modulate.a = 1
-		interface_container.hide()
+	if interface_container.visible:
+		return
+	
+	interface_container.show()
+	interface_container.modulate.a = 0
+	await get_tree().create_timer(.1).timeout
+	interface_container.modulate.a = 1
+	interface_container.hide()
 
 
 func on_display_interacted(player: Player):

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://byej14yotg1wq"
+path="res://.godot/imported/slops 02.mp3-64134c4cd48acbab4cfcee97351342dc.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/player/slops 02.mp3"
+dest_files=["res://.godot/imported/slops 02.mp3-64134c4cd48acbab4cfcee97351342dc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
