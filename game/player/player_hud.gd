@@ -51,7 +51,7 @@ func update_dots() -> void:
 			hit = Help.get_camera_center_hit()
 		
 		dot.visible = not hit.is_empty()
-		right_pickaxe_dot.visible = player.is_right_side_enabled
+		right_pickaxe_dot.visible = player.is_right_side_enabled and not hit.is_empty()
 		if not hit.is_empty():
 			var camera: Camera3D = get_viewport().get_camera_3d()
 			var normal = hit.normal

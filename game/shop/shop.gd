@@ -17,6 +17,8 @@ func _ready() -> void:
 			display_interaction_area.interacted.emit(b)
 	)
 	Global.cash_changed.connect(update_screen)
+	update_screen()
+
 
 func update_screen():
 		interface_container.show()
@@ -24,6 +26,7 @@ func update_screen():
 		await get_tree().create_timer(.1).timeout
 		interface_container.modulate.a = 1
 		interface_container.hide()
+
 
 func on_display_interacted(player: Player):
 	if not interface_container.visible:
@@ -43,6 +46,7 @@ func on_display_interacted(player: Player):
 		interface_container.hide()
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 		#sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+
 
 func on_sell_interacted(player: Player):
 	var resource = player.backpack_component.take_from_storage()

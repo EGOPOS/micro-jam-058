@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c8syds4251qn0" path="res://game/shop/shop.tscn" id="7_3gsf4"]
 [ext_resource type="PackedScene" uid="uid://csqhrg000q3m6" path="res://game/resources/end_game_resource.tscn" id="9_1565f"]
 [ext_resource type="PackedScene" uid="uid://b82x4k2k3v5u5" path="res://game/story_comics/story_comics.tscn" id="10_ogdhh"]
+[ext_resource type="PackedScene" uid="uid://xw3igid8n3ki" path="res://core/interaction_area/interaction_area.tscn" id="14_mgnlv"]
 
 [sub_resource type="Curve" id="Curve_50vgw"]
 _data = [Vector2(0.6695843, 1), 0.0, 0.0, 0, 0]
@@ -292,6 +293,9 @@ albedo_texture = SubResource("NoiseTexture2D_8vjk3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uk5k8"]
 size = Vector2(999, 999)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vbfoy"]
+radius = 1.807964
 
 [node name="Level" type="Node3D" unique_id=368980622 node_paths=PackedStringArray("player", "water_node")]
 script = ExtResource("1_8bv7i")
@@ -854,5 +858,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6813317, 0.35233968, -9.28
 
 [node name="Rock2" parent="." unique_id=598181530 instance=ExtResource("6_i0emn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2575661, 0.31644052, -7.5160093)
+
+[node name="Node3D" type="Node3D" parent="." unique_id=651507764]
+
+[node name="StartTidesButton" type="Node3D" parent="." unique_id=164894173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8650104, 0)
+
+[node name="StartTidesInteractionArea" parent="StartTidesButton" unique_id=1761820376 instance=ExtResource("14_mgnlv")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6979538, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartTidesButton/StartTidesInteractionArea" unique_id=390386463]
+shape = SubResource("SphereShape3D_vbfoy")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="StartTidesButton" unique_id=419534132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.43014193, 0)
 
 [editable path="GD_lvl_Test"]
