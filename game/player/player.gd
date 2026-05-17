@@ -22,7 +22,11 @@ class_name Player extends CharacterBody3D
 @export var camera_animation_speed: float = 3.0
 @export var camera_animation_floor_strength: float = 3.0
 @export var camera_animation_air_strength: float = 5.0
-@export var camera_animation_jetpack_strength: float = 15.0
+@export var max_shake_offset: float = 0.25 # Максимальное смещение камеры в метрах при критическом падении
+@export var max_shake_duration: float = 0.2 # Максимальное время тряски
+@export var max_air_shake_offset: float = 0.5
+@export var fov_falling: float = 20.0 # На сколько градусов увеличится FOV при максимальной скорости падения
+@export var fov_acceleration: float = 10.0 # На сколько градусов увеличится FOV при максимальной скорости падения
 
 @export_group("climbing")
 @export var climb_jump_velocity_multiplier: float = 1.6
@@ -37,6 +41,7 @@ class_name Player extends CharacterBody3D
 @export_group("stamina")
 @export var max_stamina: float = 5.0
 @export var recover_stamina_delay: float = 0.8
+@export var recover_stamina_muliplier: float = 2.5
 @export var start_recover_from: float = 0.3
 
 
@@ -72,6 +77,10 @@ class_name Player extends CharacterBody3D
 var interaction_delay: float = 0.1
 var last_interaction_time: int #ticks
 
+var camera_shake_tween: Tween
+var initial_camera_pos: Vector3 = Vector3()
+var default_fov: float = 90
+
 var max_jump_buffer: int = 1
 var jump_buffer: int = max_jump_buffer
 
@@ -85,6 +94,7 @@ var is_climbing: bool = false
 
 var time_not_climbing: int # ticks
 
+@export var death_fall_velocity: float = -20.0
 var last_good_pos: Vector3
 
 
@@ -164,6 +174,9 @@ func _ready() -> void:
 	
 	last_good_pos = position
 	update_defaults()
+	
+	if camera:
+		default_fov = camera.fov
 	
 	Global.player = self
 
@@ -300,16 +313,103 @@ func _process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))
 	pickaxe_right.visible = is_right_side_enabled
 
-#func _physics_process(delta: float) -> void:
-	# for wind sound
-	#if abs(velocity.y) >= wind_velocity:
-		#if not wind_player.playing:
-			#wind_player.play()
-		#wind_player.volume_db = min(abs(velocity.y) + wind_min_db, wind_max_db)
-	#else:
-		#wind_player.volume_db = lerp(wind_player.volume_db, wind_min_db, delta * 6.0)
-		#if round(wind_player.volume_db) == wind_min_db:
-			#wind_player.playing = false
+var was_on_floor: bool = false
+var last_velocity_y: float = 0.0
+
+func _physics_process(delta: float) -> void:
+	# Проверка приземления
+	if is_on_floor() and not was_on_floor:
+		if last_velocity_y < -5.0: 
+			if last_velocity_y < death_fall_velocity:
+				fall_return()
+			else:
+				trigger_fall_shake(last_velocity_y)
+
+	if not is_on_floor() and velocity.y < -5.0:
+		# Считаем интенсивность от 0.0 до 1.0 на основе текущей (!) скорости
+		var intensity = remap(velocity.y, -5.0, death_fall_velocity, 0.0, 1.0)
+		intensity = clamp(intensity, 0.0, 1.0)
+		
+		if intensity > 0.0:
+			# Вычисляем случайное смещение на этот кадр
+			var current_power = max_air_shake_offset * intensity
+			var random_offset = Vector3(
+				randf_range(-current_power, current_power),
+				randf_range(-current_power, current_power),
+				randf_range(-current_power * 0.5, current_power * 0.5)
+			)
+			# Применяем тряску (плавно интерполируем от текущей позиции к целевой, чтобы не было микро-телепортов)
+			var target_pos = initial_camera_pos + random_offset
+			camera.position = camera.position.lerp(target_pos, delta * 30.0)
+			
+			# Динамически увеличиваем FOV в зависимости от скорости падения
+			#var target_fov = default_fov + (fov_falling * intensity)
+			#camera.fov = lerp(camera.fov, target_fov, delta * 10.0)
+	
+	# 2. Если игрок на земле или летит вверх (прыгает) — плавно возвращаем камеру на место
+	else:
+		if camera.position != initial_camera_pos:
+			camera.position = camera.position.lerp(initial_camera_pos, delta * 15.0)
+			# Маленькая оптимизация: если почти вернулись в ноль, ставим точный ноль
+			if camera.position.distance_to(initial_camera_pos) < 0.001:
+				camera.position = initial_camera_pos
+		
+	# Плавно возвращаем FOV к исходному значению
+	#if camera.fov != default_fov:
+	var intensity = remap(velocity.length(), movement_speed, movement_speed * 3, 0.0, 1.0)
+	intensity = clamp(intensity, 0.0, 1.0)
+	var target_fov = default_fov + (fov_acceleration * intensity)
+	camera.fov = lerp(camera.fov, target_fov, delta * movement_speed)
+	
+	if target_fov == default_fov and abs(camera.fov - default_fov) < 0.01:
+		camera.fov = default_fov
+	
+	last_velocity_y = velocity.y
+	was_on_floor = is_on_floor()
+
+func trigger_fall_shake(fall_velocity: float) -> void:
+	if not camera: return
+	
+	# 1. Считаем интенсивность падения от 0.0 (едва заметно) до 1.0 (на грани смерти)
+	# Используем remap, чтобы перевести скорость из диапазона [от -5.0 до death_fall_velocity] в [0.0 - 1.0]
+	var intensity = remap(fall_velocity, -5.0, death_fall_velocity, 0.0, 1.0)
+	intensity = clamp(intensity, 0.0, 1.0)
+	
+	# Вычисляем силу и время тряски для этого конкретного падения
+	var shake_power = max_shake_offset * intensity
+	var shake_time = max_shake_duration * intensity
+	
+	# Сбрасываем старый твин тряски, если игрок умудрился упасть дважды
+	if camera_shake_tween and camera_shake_tween.is_valid():
+		camera_shake_tween.kill()
+		
+	camera_shake_tween = create_tween()
+	
+	# Сколько раз камера дернется за время тряски (частота)
+	var shake_steps = 6
+	var step_duration = shake_time / shake_steps
+	
+	# 2. Создаем цепочку случайных смещений, которая затухает к концу
+	for i in range(shake_steps):
+		# С каждым шагом уменьшаем силу тряски (затухание)
+		var current_power = shake_power * (float(shake_steps - i) / shake_steps)
+		
+		# Генерируем случайное смещение по осям X и Y (и немного Z по желанию)
+		var random_offset = Vector3(
+			randf_range(-current_power, current_power),
+			randf_range(-current_power, current_power),
+			randf_range(-current_power * 0.5, current_power * 0.5)
+		)
+		
+		# Прибавляем к стартовой позиции камеры, чтобы она не улетала в космос
+		var target_pos = initial_camera_pos + random_offset
+		
+		camera_shake_tween.tween_property(camera, "position", target_pos, step_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			
+	# 3. В самом конце возвращаем камеру строго в исходное положение
+	camera_shake_tween.tween_property(camera, "position", initial_camera_pos, step_duration)\
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _input(event: InputEvent):
@@ -323,8 +423,8 @@ func _input(event: InputEvent):
 	if Input.is_action_just_pressed("ui_cancel"):
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED else DisplayServer.MOUSE_MODE_CAPTURED)
 
-	if Input.is_key_pressed(KEY_R):
-		fall_return()
+	#if Input.is_key_pressed(KEY_R):
+		#fall_return()
 
 
 
@@ -366,8 +466,3 @@ func fall_return():
 	await get_tree().create_timer(.3).timeout
 	Fade.fade_in(.3)
 	position = last_good_pos
-
-
-func _on_pos_save_timer_timeout() -> void:
-	if is_on_floor():
-		last_good_pos = position

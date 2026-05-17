@@ -36,7 +36,7 @@ func physics_update(delta):
 						change_state(states.Climb)
 	
 	if self != states.Climb and get_left_time(player.time_not_climbing) > player.recover_stamina_delay and player.is_on_floor():
-		player.restore_stamina(delta)
+		player.restore_stamina(delta * player.recover_stamina_muliplier)
 
 
 func input(event: InputEvent) -> void:

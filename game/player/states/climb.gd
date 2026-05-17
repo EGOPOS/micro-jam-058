@@ -11,7 +11,7 @@ func enter(data):
 func update(delta):
 	super(delta)
 	
-	#player.spend_stamina(delta)
+	player.spend_stamina(delta)
 	
 	var attached_positions = player.get_attached_positions()
 	

@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dwhlk4ywmgaoi"]
+
+[ext_resource type="Script" uid="uid://dhfg8e1rn5g3j" path="res://game/player_hud.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://cd2mey8cklqoa" path="res://assets/materials/shaders/vignette.gdshader" id="2_tc3lc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1nsen"]
+shader = ExtResource("2_tc3lc")
+shader_parameter/fadeAmount = 0.0
+shader_parameter/fadeSmoothing = 0.6000000285
+shader_parameter/fadeColor = Color(0, 0, 0, 1)
+shader_parameter/offset = Vector2(0.5, 0.5)
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/hypotenuse = 0.707
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_walw6"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1696944536]
+script = ExtResource("1_script")
+
+[node name="Vignette" type="ColorRect" parent="." unique_id=1179967305]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_1nsen")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="." unique_id=901943731]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="ColorRect" parent="Center" unique_id=1298460748]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Center" unique_id=395720950]
+layout_mode = 2
+theme_override_constants/margin_top = 50
+
+[node name="StaminaBar" type="ProgressBar" parent="Center/MarginContainer" unique_id=1553320330]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 10)
+layout_mode = 2
+mouse_filter = 2
+value = 50.0
+show_percentage = false
+
+[node name="Node" type="Node" parent="." unique_id=714459921]
+
+[node name="PickaxeDot" type="CSGCombiner3D" parent="Node" unique_id=1775058429]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_walw6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node/PickaxeDot" unique_id=1146056099]
+transform = Transform3D(0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0, 1, 0, 0, 0)
+size = Vector3(0.05, 0.2, 0.02)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node/PickaxeDot" unique_id=1905379752]
+transform = Transform3D(0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0, 1, 0, 0, 0)
+size = Vector3(0.05, 0.2, 0.02)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Node/PickaxeDot" unique_id=1286028255]
+transform = Transform3D(1.9106855e-15, 2.1855694e-08, -1, 1, -2.1855694e-08, 0, -4.371139e-08, -0.5, -4.371139e-08, 0, 0, 0)
+visible = false
+radius = 0.06
+radial_segments = 24
+rings = 12
+material = SubResource("StandardMaterial3D_walw6")
+
+[node name="PickaxeDot2" type="CSGCombiner3D" parent="Node" unique_id=652350298]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_walw6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node/PickaxeDot2" unique_id=1083398566]
+transform = Transform3D(0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0, 1, 0, 0, 0)
+size = Vector3(0.05, 0.2, 0.02)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node/PickaxeDot2" unique_id=99424474]
+transform = Transform3D(0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0, 1, 0, 0, 0)
+size = Vector3(0.05, 0.2, 0.02)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Node/PickaxeDot2" unique_id=1551061527]
+transform = Transform3D(1.9106855e-15, 2.1855694e-08, -1, 1, -2.1855694e-08, 0, -4.371139e-08, -0.5, -4.371139e-08, 0, 0, 0)
+visible = false
+radius = 0.06
+radial_segments = 24
+rings = 12
+material = SubResource("StandardMaterial3D_walw6")
