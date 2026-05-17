@@ -164,6 +164,8 @@ func _ready() -> void:
 	
 	last_good_pos = position
 	update_defaults()
+	
+	Global.player = self
 
 
 #region Changing values
@@ -185,6 +187,8 @@ func apply_defaults():
 	max_stamina = default_max_stamina
 	start_recover_from = default_start_recover_from
 	max_jump_buffer = default_max_jump_buffer
+	if is_on_floor():
+		reset_jump_buffer()
 
 
 func update_jump():
@@ -199,7 +203,6 @@ func on_overweight_changed():
 	var jmp_mult = pow(jump_affect_scale, backpack_component.get_overweight())
 	if jmp_mult > 0.6:
 		multiply_jump(jmp_mult)
-		max_jump_buffer = default_max_jump_buffer
 	else:
 		max_jump_buffer = 0
 	
@@ -254,7 +257,7 @@ func update_picaxe_transform(hit, is_left: bool):
 
 func _process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))
-
+	pickaxe_right.visible = is_right_side_enabled
 
 #func _physics_process(delta: float) -> void:
 	# for wind sound

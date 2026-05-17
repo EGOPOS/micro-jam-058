@@ -37,6 +37,8 @@ var _target_y: float = 0.0
 
 
 func _ready() -> void:
+	Global.level = self
+	
 	# Если узел воды не назначен, пытаемся найти его в сцене
 	if water_node == null:
 		water_node = get_node_or_null("Water")

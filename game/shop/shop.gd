@@ -12,6 +12,11 @@ func _ready() -> void:
 	interface_container.hide()
 	display_interaction_area.interacted.connect(on_display_interacted)
 	sell_interaction_area.interacted.connect(on_sell_interacted)
+	display_interaction_area.body_exited.connect(func(b):
+		if b is Player and interface_container.visible:
+			display_interaction_area.interacted.emit(b)
+	)
+
 
 func on_display_interacted(player: Player):
 	if not interface_container.visible:
