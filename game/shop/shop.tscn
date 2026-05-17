@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://mbwuoetmnpnn" path="res://game/shop/shop.gd" id="1_ep8m2"]
 [ext_resource type="PackedScene" uid="uid://j8n8p0wfhbgy" path="res://assets/models/PC.glb" id="1_xxtpb"]
 [ext_resource type="PackedScene" uid="uid://bbqch347a7wdn" path="res://game/shop/shop_interface.tscn" id="2_1td5y"]
+[ext_resource type="PackedScene" uid="uid://xw3igid8n3ki" path="res://core/interaction_area/interaction_area.tscn" id="3_aur6q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ep8m2"]
 size = Vector3(1, 1, 0.05)
@@ -16,12 +17,19 @@ albedo_texture = SubResource("ViewportTexture_1td5y")
 
 [sub_resource type="QuadMesh" id="QuadMesh_1td5y"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_bhwao"]
+radius = 1.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aur6q"]
+radius = 1.4
+
 [node name="Shop" type="Node3D" unique_id=266592243]
 process_mode = 3
 script = ExtResource("1_ep8m2")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1565856088]
 unique_name_in_owner = true
+process_mode = 3
 collision_layer = 8
 collision_mask = 0
 
@@ -30,6 +38,7 @@ transform = Transform3D(-4.2947573e-08, -0.12805137, 0.99176776, -5.9157976e-09,
 shape = SubResource("BoxShape3D_ep8m2")
 
 [node name="PC" parent="." unique_id=387469739 instance=ExtResource("1_xxtpb")]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0407865, 0, 1.5113852)
 visible = false
 
@@ -37,9 +46,36 @@ visible = false
 transform = Transform3D(0.40054062, 0, 0, 0, 0.5022816, 0, 0, 0, 0.40054062, -1.0703528, 0.022000015, -1.5102928)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1491812403]
+process_mode = 3
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.5661557, 0)
 material_override = SubResource("StandardMaterial3D_ep8m2")
 mesh = SubResource("QuadMesh_1td5y")
+
+[node name="InteractionArea" parent="." unique_id=139767687 instance=ExtResource("3_aur6q")]
+unique_name_in_owner = true
+process_mode = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=318466145]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62675405, 0)
+shape = SubResource("SphereShape3D_bhwao")
+
+[node name="SellInteractionArea" parent="." unique_id=1761820376 instance=ExtResource("3_aur6q")]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SellInteractionArea" unique_id=864659342]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16932654, 0.62675405, 0)
+shape = SubResource("SphereShape3D_aur6q")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=130638512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022292972, 0.4280615, 2.5201638)
+
+[node name="SellMarker3D" type="Marker3D" parent="CSGBox3D" unique_id=21772785]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9824972, 0)
 
 [node name="InterfaceContainer" type="PanelContainer" parent="." unique_id=208411514]
 unique_name_in_owner = true
@@ -51,6 +87,7 @@ offset_right = 832.0
 offset_bottom = 580.0
 
 [node name="MarginContainer" type="MarginContainer" parent="InterfaceContainer" unique_id=699640398]
+process_mode = 3
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -58,17 +95,20 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="InterfaceContainer/MarginContainer" unique_id=1967184387]
+process_mode = 3
 layout_mode = 2
 stretch = true
 mouse_target = true
 
 [node name="SubViewport" type="SubViewport" parent="InterfaceContainer/MarginContainer/SubViewportContainer" unique_id=1812539463]
 unique_name_in_owner = true
+process_mode = 3
 handle_input_locally = false
 size = Vector2i(480, 480)
 render_target_update_mode = 4
 
 [node name="ShopInterface" parent="InterfaceContainer/MarginContainer/SubViewportContainer/SubViewport" unique_id=446489245 instance=ExtResource("2_1td5y")]
+process_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [editable path="PC"]

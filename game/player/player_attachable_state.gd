@@ -7,6 +7,8 @@ func enter(props: Dictionary):
 	player = props.player
 
 func physics_update(delta):
+	if player.is_blocked:
+		return
 	#print(player.stamina)
 	
 	if player.is_can_climb():
@@ -38,7 +40,7 @@ func physics_update(delta):
 
 
 func input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("interaction") and is_can_interact():
+	if Input.is_action_just_pressed("throw") and is_can_interact():
 		player.backpack_component.put_on_floor_from_storage()
 		player.last_interaction_time = get_time()
 

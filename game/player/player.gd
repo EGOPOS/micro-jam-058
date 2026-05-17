@@ -132,6 +132,7 @@ func get_direction():
 	return Vector3(get_input_direction().x, 0, get_input_direction().y).rotated(Vector3.UP, camera.rotation.y)
 
 func get_input_direction():
+	if is_blocked: return Vector2()
 	return Input.get_vector("movement_left", "movement_right", "movement_forward", "movement_back")
 
 func lerp_camera(delta: float, camera_rotation: Vector3):

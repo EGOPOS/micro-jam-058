@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var spawn: bool = false
+
 @export var level_meshes: Node3D
 @export var level_static_body: StaticBody3D
 
@@ -23,6 +25,8 @@ extends Node3D
 
 
 func _ready() -> void:
+	if not spawn:
+		return
 	fill_resources_below_y(start_spawn_y, spawn_max_depth, spacing, spawn_curve)
 
 func fill_resources_below_y(spawn_from: float, spawn_to: float, spacing: float, spawn_curve: Curve) -> void:
