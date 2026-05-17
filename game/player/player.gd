@@ -427,7 +427,6 @@ func _input(event: InputEvent):
 		#fall_return()
 
 
-
 #region Climbing
 func apply_climb_attaching(delta: float, target_velocity: Vector3, multiplier: float):
 	velocity = velocity.lerp(target_velocity, delta * multiplier)
@@ -462,7 +461,63 @@ func is_can_climb():
 #endregion
 
 func fall_return():
+	drop_resources()
 	Fade.fade_out(.3)
-	await get_tree().create_timer(.3).timeout
+	
+	await get_tree().create_timer(.15).timeout
+	create_tween().tween_method(func(a):
+			global_position = last_good_pos,
+		0, 100, .15)
+	await get_tree().create_timer(.15).timeout
+	
 	Fade.fade_in(.3)
-	position = last_good_pos
+
+func drop_resources(count: int = -1):
+	var drop_center = global_position
+	var item = backpack_component.take_from_storage()
+	var space_state = get_world_3d().direct_space_state
+	
+	while item != null and (count > 0 or count == -1):
+		if item.get_parent() == null:
+			get_parent().add_child(item)
+			
+		item.show()
+		
+		var random_radius = randf_range(0.5, 2.0)
+		var random_angle = randf_range(0.0, TAU)
+		
+		var offset = Vector3(
+			cos(random_angle) * random_radius,
+			0.0,
+			sin(random_angle) * random_radius
+		)
+		
+		var target_horizontal_pos = drop_center + offset
+		var ray_start = target_horizontal_pos + Vector3(0.0, 2.0, 0.0)
+		var ray_end = target_horizontal_pos + Vector3(0.0, -100.0, 0.0)
+		
+		var query = PhysicsRayQueryParameters3D.create(ray_start, ray_end)
+		query.exclude = [get_rid(), item.get_rid()] 
+		
+		var result = space_state.intersect_ray(query)
+		
+		if result.has("position"):
+			item.global_position = drop_center
+			var time = ray_start.distance_to(ray_end)/100
+			create_tween().tween_property(item, "global_position", result.position, time)
+			
+			var floor_normal = result.normal
+			if floor_normal.dot(Vector3.UP) < 0.99:
+				var axis = Vector3.UP.cross(floor_normal).normalized()
+				var angle = Vector3.UP.angle_to(floor_normal)
+				if axis.length() > 0.001:
+					item.global_rotation = Vector3.ZERO
+					item.rotate(axis, angle)
+		else:
+			item.global_position = target_horizontal_pos
+			item.queue_free()
+		
+		item.rotate_object_local(Vector3.UP, randf_range(0.0, TAU))
+		item = backpack_component.take_from_storage()
+		if count != -1:
+			count -= 1

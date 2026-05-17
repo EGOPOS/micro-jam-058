@@ -36,6 +36,9 @@ var _start_y: float = 0.0
 var _target_y: float = 0.0
 
 
+var drop_resource_timer: float = 0.0
+var drop_resource_rate: float = 0.5
+
 func _ready() -> void:
 	Global.level = self
 	
@@ -56,7 +59,14 @@ func _process(delta: float) -> void:
 	var gloal_wl = water_node.global_position.y
 	if player.global_position.y < gloal_wl:
 		player.velocity += Vector3.UP * (gloal_wl - player.global_position.y) * player_from_water_power * delta
+		
+		player.restore_stamina(delta * 0.1)
+		
+		if drop_resource_timer > drop_resource_rate:
+			drop_resource_timer = 0
+			player.drop_resources(1)
 	
+	drop_resource_timer += delta
 	
 	if water_node == null:
 		return

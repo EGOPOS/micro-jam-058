@@ -37,6 +37,9 @@ func put_on_floor_from_storage() -> SellableResource:
 
 
 func take_from_storage() -> SellableResource:
+	if storage.is_empty():
+		return null
+	
 	var resource = storage.back()
 	storage.erase(resource)
 	
