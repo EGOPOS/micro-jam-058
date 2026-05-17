@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dhfg8e1rn5g3j" path="res://game/player_hud.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://cd2mey8cklqoa" path="res://assets/materials/shaders/vignette.gdshader" id="2_tc3lc"]
+[ext_resource type="Shader" uid="uid://c3gg3o2dbejea" path="res://assets/materials/shaders/bip.gdshader" id="3_1nsen"]
+[ext_resource type="Script" uid="uid://csjk6bfsixcyd" path="res://game/blink_shader_rect.gd" id="4_pxo6l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1nsen"]
 shader = ExtResource("2_tc3lc")
@@ -15,6 +17,24 @@ shader_parameter/hypotenuse = 0.707
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_walw6"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Environment" id="Environment_pxo6l"]
+background_color = Color(1, 1, 1, 1)
+
+[sub_resource type="World3D" id="World3D_odyhq"]
+environment = SubResource("Environment_pxo6l")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5y7re"]
+size = Vector2(1, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2e7d6"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ecrf8"]
+shader = ExtResource("3_1nsen")
+shader_parameter/cutout = 0.0
+shader_parameter/inner_fill = 0.33999999240032
+shader_parameter/custom_time = 0.0
 
 [node name="PlayerHUD" type="CanvasLayer" unique_id=1696944536]
 script = ExtResource("1_script")
@@ -98,3 +118,52 @@ radius = 0.06
 radial_segments = 24
 rings = 12
 material = SubResource("StandardMaterial3D_walw6")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=615646090]
+world_3d = SubResource("World3D_odyhq")
+transparent_bg = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="SubViewport" unique_id=511734384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1642212, 0)
+size = Vector3(1, 0.36218262, 1)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=325194664]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.2952424, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport" unique_id=2016053379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.059287548, 0)
+mesh = SubResource("PlaneMesh_5y7re")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport" unique_id=1271382835]
+environment = SubResource("Environment_pxo6l")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport" unique_id=807803232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29328653, 0)
+
+[node name="RadarContainer" type="TextureRect" parent="." unique_id=1749767958]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_right = 256.0
+offset_bottom = 169.0
+grow_horizontal = 2
+texture = SubResource("ViewportTexture_2e7d6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="RadarContainer" unique_id=214307747]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlinkShaderRect" type="ColorRect" parent="RadarContainer/CenterContainer" unique_id=945694850]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ecrf8")
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+script = ExtResource("4_pxo6l")

@@ -74,6 +74,8 @@ class_name Player extends CharacterBody3D
 @onready var pickaxes = [pickaxe_left, pickaxe_right]
 @onready var pickaxe_markers = [pickaxe_left_marker, pickaxe_right_marker]
 
+@onready var hud: PlayerHUD = %PlayerHUD
+
 var interaction_delay: float = 0.1
 var last_interaction_time: int #ticks
 

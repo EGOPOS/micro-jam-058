@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cwfql36u1pa07" path="res://addons/godot-prototype-texture/Vector/checker_512x512/checker_white_512x512.svg" id="4_8vjk3"]
 [ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/SellableResource.tscn" id="6_nspj4"]
 [ext_resource type="PackedScene" uid="uid://c8syds4251qn0" path="res://game/shop/shop.tscn" id="7_3gsf4"]
+[ext_resource type="PackedScene" uid="uid://csqhrg000q3m6" path="res://game/resources/end_game_resource.tscn" id="9_1565f"]
 
 [sub_resource type="Curve" id="Curve_1565f"]
 _data = [Vector2(0.075718015, 1), 0.0, 0.0, 0, 0, Vector2(0.21409923, 0), 0.0, 0.0, 0, 0, Vector2(0.74934727, 0), 0.0, 0.0, 0, 0, Vector2(0.84334207, 1), 0.0, 0.0, 0, 0]
@@ -799,32 +800,9 @@ shape = SubResource("ConcavePolygonShape3D_toqof")
 
 [node name="Resources" type="Node3D" parent="." unique_id=1013826204]
 
-[node name="SellableResourceComponent" parent="Resources" unique_id=1501890312 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.406759, -0.2086004, -2.0724478)
-
-[node name="SellableResourceComponent2" parent="Resources" unique_id=1160362952 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.250975, -0.18610711, -0.19061932)
-
-[node name="SellableResourceComponent3" parent="Resources" unique_id=1566638428 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4705386, -0.23243058, -5.0980372)
-
-[node name="SellableResourceComponent4" parent="Resources" unique_id=1197255855 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.737915, -0.2534365, -2.255993)
-
-[node name="SellableResourceComponent5" parent="Resources" unique_id=1391550595 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.467844, -0.18391454, -2.1444516)
-
-[node name="SellableResourceComponent6" parent="Resources" unique_id=2103880577 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5366035, -0.20730674, -4.3191466)
-
-[node name="SellableResourceComponent7" parent="Resources" unique_id=76036546 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.565069, -0.2559318, -3.412716)
-
-[node name="SellableResourceComponent8" parent="Resources" unique_id=1421310238 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.035898, -0.21646877, -0.57992727)
-
-[node name="SellableResourceComponent9" parent="Resources" unique_id=96291947 instance=ExtResource("6_nspj4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4986463, -0.15601563, 1.0644237)
+[node name="EndGameResource" parent="Resources" unique_id=1729651865 instance=ExtResource("9_1565f")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9999, 0)
 
 [node name="Player" parent="." unique_id=441845844 instance=ExtResource("2_xssv6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4240055, 3.4763775, 0.65440845)
@@ -841,5 +819,9 @@ mesh = SubResource("PlaneMesh_uk5k8")
 
 [node name="Shop" parent="." unique_id=266592243 instance=ExtResource("7_3gsf4")]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -10.888199, -0.51724017, 4.09479)
+
+[node name="EndGameMarker3D" type="Marker3D" parent="." unique_id=3398954]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.103142, -43.39362, 50.36777)
 
 [editable path="GD_lvl_Test"]

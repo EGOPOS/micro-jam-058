@@ -2,20 +2,12 @@
 
 [ext_resource type="Script" uid="uid://qg8hfeogly03" path="res://game/resources/sellable_resource.gd" id="1_1fs5j"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_dd0yf"]
-size = Vector3(0.5, 0.5, 0.5)
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_dd0yf"]
 
 [node name="SellableResourceComponent" type="StaticBody3D" unique_id=1501890312]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_1fs5j")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=878342865]
-unique_name_in_owner = true
-transform = Transform3D(0.70710677, 0.49999997, 0.49999997, 0, 0.70710677, -0.70710677, -0.70710677, 0.49999997, 0.49999997, 0, 0, 0)
-mesh = SubResource("BoxMesh_dd0yf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=77926579]
 shape = SubResource("SphereShape3D_dd0yf")

@@ -25,6 +25,10 @@ InputBuffer="*uid://dsbyw8nb3jqeg"
 Help="*uid://flag5qla2lym"
 Global="*uid://cwpqdqxit0psj"
 
+[global_group]
+
+endgame="for last resource"
+
 [input]
 
 movement_left={

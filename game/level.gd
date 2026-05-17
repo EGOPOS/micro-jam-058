@@ -26,6 +26,8 @@ extends Node3D
 ## Кривая для плавного перехода между уровнями воды
 @export var ease_curve: Curve
 
+@onready var end_game_marker: Marker3D = %EndGameMarker3D
+@onready var end_game_resource: SellableResource = %EndGameResource
 
 # Внутренние переменные
 var _timer: float = 0.0

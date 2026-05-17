@@ -7,6 +7,12 @@ class_name PlayerHUD extends CanvasLayer
 @onready var right_pickaxe_dot: Node3D = %PickaxeDot2
 @onready var dots = [left_pickaxe_dot, right_pickaxe_dot]
 
+@onready var radar_container: TextureRect = %RadarContainer
+@onready var blink_shader_rect: ColorRect = %BlinkShaderRect
+
+var radar_mat: ShaderMaterial
+var target_resource: SellableResource
+
 var player: Player
 var backpack_comp: Node
 
@@ -18,12 +24,23 @@ func _ready() -> void:
 		backpack_comp = player.backpack_component
 		backpack_comp.overweight_changed.connect(_on_overweight_changed)
 		_on_overweight_changed()
+		
+	radar_mat = blink_shader_rect.material as ShaderMaterial
+	target_resource = get_tree().get_first_node_in_group("endgame")
+	radar_container.hide()
 
 func _process(_delta: float) -> void:
 	if player:
 		stamina_bar.max_value = player.max_stamina
 		stamina_bar.value = player.stamina
 		update_dots()
+	
+	if radar_container.visible:
+		var distance = target_resource.global_position.distance_to(player.global_position)
+		var max_speed: float = 10
+		var speed = remap(distance, 0.0, 100.0, 0.0, max_speed)
+		speed = clamp(speed, 0, max_speed)
+		blink_shader_rect.target_speed = max(1, max_speed - speed)
 
 
 func update_dots() -> void:

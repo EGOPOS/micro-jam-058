@@ -126,3 +126,4 @@ wait_time = 6.0
 autostart = true
 
 [node name="PlayerHUD" parent="." unique_id=1113211450 instance=ExtResource("12_uv2nh_hud")]
+unique_name_in_owner = true

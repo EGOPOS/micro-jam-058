@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d3gcoxg1cpiv5"
-path="res://.godot/imported/Shredder.glb-6819ca17d450d6d438a2ba84dac7db19.scn"
+uid="uid://dbr0m6bjkik6v"
+path="res://.godot/imported/Shrader.glb-e69c44b4ff5aee22a16e0e6dd0436af0.scn"
 
 [deps]
 
-source_file="res://assets/models/Shredder.glb"
-dest_files=["res://.godot/imported/Shredder.glb-6819ca17d450d6d438a2ba84dac7db19.scn"]
+source_file="res://assets/models/Shrader.glb"
+dest_files=["res://.godot/imported/Shrader.glb-e69c44b4ff5aee22a16e0e6dd0436af0.scn"]
 
 [params]
 
