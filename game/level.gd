@@ -1,6 +1,10 @@
 class_name Level
 extends Node3D
 
+@export var player: Player
+@export var player_from_water_power: float = 40
+
+@export_category("tides")
 ## Узел с водой (плейн), который будет подниматься и опускаться
 @export var water_node: Node3D
 
@@ -21,6 +25,7 @@ extends Node3D
 
 ## Кривая для плавного перехода между уровнями воды
 @export var ease_curve: Curve
+
 
 # Внутренние переменные
 var _timer: float = 0.0
@@ -46,6 +51,11 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	var gloal_wl = water_node.global_position.y
+	if player.global_position.y < gloal_wl:
+		player.velocity += Vector3.UP * (gloal_wl - player.global_position.y) * player_from_water_power * delta
+	
+	
 	if water_node == null:
 		return
 	
