@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bqd8i45iw4j4n"
-path="res://.godot/imported/Pick.glb-f1b2bd0b6d65096ddd530b6c91ba1e13.scn"
+uid="uid://nriec7bnfvqv"
+path="res://.godot/imported/Metal.glb-4bdafeaa0643503224ccd8311931bfc8.scn"
 
 [deps]
 
-source_file="res://assets/models/Pick.glb"
-dest_files=["res://.godot/imported/Pick.glb-f1b2bd0b6d65096ddd530b6c91ba1e13.scn"]
+source_file="res://assets/models/Metal.glb"
+dest_files=["res://.godot/imported/Metal.glb-4bdafeaa0643503224ccd8311931bfc8.scn"]
 
 [params]
 

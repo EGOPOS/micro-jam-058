@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7clepwqkfoj0"
-path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_Normal.png-a02f43c7eaa017efb9fd12da35033ac7.s3tc.ctex"
+uid="uid://cbfdc46b5ph5c"
+path.s3tc="res://.godot/imported/Metal_Metal_DefaultMaterial_Metallic.1001-Metal_DefaultMaterial_Roughness.png-d1da7c24367cb65f59a6b8c9c1f7a178.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a3f5eed3e3794d8af01293b41b360cbe"
+"md5": "7bdbe336ed8075d986d3d96e2eafb5c2"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_DefaultMaterial_Normal.png"
-dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_Normal.png-a02f43c7eaa017efb9fd12da35033ac7.s3tc.ctex"]
+source_file="res://assets/models/Metal_Metal_DefaultMaterial_Metallic.1001-Metal_DefaultMaterial_Roughness.png"
+dest_files=["res://.godot/imported/Metal_Metal_DefaultMaterial_Metallic.1001-Metal_DefaultMaterial_Roughness.png-d1da7c24367cb65f59a6b8c9c1f7a178.s3tc.ctex"]
 
 [params]
 
@@ -25,12 +25,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://assets/models/Pick_Pick_DefaultMaterial_Normal.png"
+roughness/mode=0
+roughness/src_normal=""
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

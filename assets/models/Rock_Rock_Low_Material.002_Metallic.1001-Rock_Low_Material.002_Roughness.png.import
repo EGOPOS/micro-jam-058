@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rod7ry5vfu18"
-path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png-4bff27f0098c8d57bf836ec201935e2a.s3tc.ctex"
+uid="uid://dcujknfkw5tgh"
+path.s3tc="res://.godot/imported/Rock_Rock_Low_Material.002_Metallic.1001-Rock_Low_Material.002_Roughness.png-50fdee0ff11db1bab2020b7610d07c6f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "6563a66569cb793665f6fe66d1e51c3b"
+"md5": "4a2589ad1aac368bfc0b8a39e6d6021f"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png"
-dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001.png-Pick_DefaultMaterial_Roughness.1001.png-4bff27f0098c8d57bf836ec201935e2a.s3tc.ctex"]
+source_file="res://assets/models/Rock_Rock_Low_Material.002_Metallic.1001-Rock_Low_Material.002_Roughness.png"
+dest_files=["res://.godot/imported/Rock_Rock_Low_Material.002_Metallic.1001-Rock_Low_Material.002_Roughness.png-50fdee0ff11db1bab2020b7610d07c6f.s3tc.ctex"]
 
 [params]
 

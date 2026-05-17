@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bi5fmswkwvj5h"
+path.s3tc="res://.godot/imported/Pick_Pick_Pick_Normal.png-7c3e96e2f7af1f00da0a6abd21510bf9.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "6fd61b29d4b430214b5d1b828f32942c"
+}
+
+[deps]
+
+source_file="res://assets/models/Pick_Pick_Pick_Normal.png"
+dest_files=["res://.godot/imported/Pick_Pick_Pick_Normal.png-7c3e96e2f7af1f00da0a6abd21510bf9.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://assets/models/Pick_Pick_Pick_Normal.png"
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

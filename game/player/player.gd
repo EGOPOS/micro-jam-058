@@ -222,6 +222,9 @@ func multiply_stamina(stm_mult: float):
 #endregion
 
 
+# Храним ссылки на активные твины для каждой кирки, чтобы они не конфликтовали
+var pickaxe_tweens: Dictionary = {}
+
 func update_picaxe_transform(hit, is_left: bool):
 	var index = int(not is_left)
 	var pickaxe: Node3D = pickaxes[index] 
@@ -230,13 +233,34 @@ func update_picaxe_transform(hit, is_left: bool):
 	var target_position: Vector3
 	var target_rotation: Vector3
 	
+	# Убиваем предыдущий твин для этой кирки, если он ещё работает
+	if pickaxe_tweens.has(index) and pickaxe_tweens[index] is Tween:
+		pickaxe_tweens[index].kill()
+	
 	if hit == null:
-		target_position = packaxe_marker.global_position
-		target_rotation = packaxe_marker.global_rotation
+		# ВОЗВРАТ КИРКИ В РУКИ
 		pickaxe.reparent(camera)
+		
+		# Высчитываем целевую ЛОКАЛЬНУЮ позицию и поворот относительно нового родителя (camera)
+		# Если маркер — прямой дочерний элемент камеры, то его local_position — это то, что нам нужно
+		var target_local_pos = packaxe_marker.position
+		var target_local_rot = packaxe_marker.rotation
+		
+		# Создаем твин для локальных координат
+		var tween = create_tween().set_parallel(true)
+		pickaxe_tweens[index] = tween
+		
+		# Анимируем именно свойства position и rotation, а не global_position
+		# Теперь кирка будет "привязана" к движению камеры прямо во время полета!
+		tween.tween_property(pickaxe, "position", target_local_pos, 0.2)\
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(pickaxe, "rotation", target_local_rot, 0.2)\
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			
 	else:
+		# УДАР КИРКОЙ В СТЕНУ/РЕСУРС
 		var normal = hit.normal
-		target_position = hit.position - normal * 0.25
+		target_position = hit.position - normal * randf_range(0.15, 0.45)
 		
 		var up_vector = Vector3.UP
 		if abs(normal.dot(Vector3.UP)) > 0.99:
@@ -245,15 +269,32 @@ func update_picaxe_transform(hit, is_left: bool):
 		var target_basis = Basis.looking_at(normal, up_vector, true)
 		if abs(normal.dot(Vector3.UP)) > 0.99:
 			target_basis = target_basis.rotated(Vector3.UP, camera.rotation.y)
-		#else:
-			#target_basis = target_basis.rotated(Vector3.FORWARD, -camera.rotation.y)
 		
 		target_rotation = target_basis.get_euler()
 		
 		pickaxe.reparent(%Reparenter)
-	
-	pickaxe.global_position = target_position
-	pickaxe.global_rotation = target_rotation
+		
+		# Анимация быстрого и резкого удара (Замах -> Удар)
+		var tween = create_tween().set_parallel(true)
+		pickaxe_tweens[index] = tween
+		
+		# Длительность 0.1 секунды (очень быстрый удар, вонзающийся в стену)
+		tween.tween_property(pickaxe, "global_position", target_position, 0.2)\
+			.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		# Запоминаем стартовое вращение перед началом твина
+		var start_rotation = pickaxe.global_rotation
+
+		# Твиним float-коэффициент от 0.0 до 1.0
+		tween.tween_method(
+			func(weight: float):
+				pickaxe.global_rotation.x = lerp_angle(start_rotation.x, target_rotation.x, weight)
+				pickaxe.global_rotation.y = lerp_angle(start_rotation.y, target_rotation.y, weight)
+				pickaxe.global_rotation.z = lerp_angle(start_rotation.z, target_rotation.z, weight),
+			0.0, 1.0, 0.2
+		).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+			
+		# Опционально: делаем легкий "отскок" или микро-тряску при ударе
+		# Для этого параллельно можно вызвать метод тряски или пустить партиклы
 
 func _process(delta: float) -> void:
 	lerp_camera(delta, Vector3(get_input_direction().y, 0.0, get_input_direction().x) * deg_to_rad(camera_animation_strength))

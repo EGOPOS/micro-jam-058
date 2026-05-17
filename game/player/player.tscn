@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_sns1g"]
 [ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
 [ext_resource type="Script" uid="uid://bjeirc3etwa0f" path="res://game/player/backpack_component.gd" id="3_j0mij"]
-[ext_resource type="PackedScene" uid="uid://b028uk41e8hv7" path="res://assets/models/Pick.glb" id="4_gb4gm"]
+[ext_resource type="PackedScene" uid="uid://bqd8i45iw4j4n" path="res://assets/models/Pick.glb" id="4_gb4gm"]
 [ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
 [ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
 [ext_resource type="Script" uid="uid://1beo4p62aovt" path="res://game/player/states/move.gd" id="6_f5d78"]
@@ -60,8 +60,8 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
-[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=1403786646 instance=ExtResource("4_gb4gm")]
-transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.0927847e-08, 0, -1.3441114, 0.22471774)
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=686041269 instance=ExtResource("4_gb4gm")]
+transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 0, -0.0818966, 0.5112852)
 
 [node name="PickaxeRight" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1907319150]
 unique_name_in_owner = true
@@ -77,8 +77,8 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
-[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=1860042070 instance=ExtResource("4_gb4gm")]
-transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.0927847e-08, 0, -1.3441114, 0.22471774)
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=919883574 instance=ExtResource("4_gb4gm")]
+transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 0, -0.0818966, 0.5112852)
 
 [node name="PickaxeLeftMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=2042362621]
 unique_name_in_owner = true

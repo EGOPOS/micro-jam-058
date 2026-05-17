@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddor7otj0ylkj"
-path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_BaseColor.png-69938acd2fe0a174681dd94cf1c30c4f.s3tc.ctex"
+uid="uid://b8pisttddna0l"
+path.s3tc="res://.godot/imported/Crate_Crate_DefaultMaterial_BaseColor.png-278432f557cfc8d8b8bfc53ff4f38956.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "194cb84653ccd9b4bd3f3fab0e55601a"
+"md5": "2dc02d2be2a4a735ae85bfe754a6f619"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_DefaultMaterial_BaseColor.png"
-dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_BaseColor.png-69938acd2fe0a174681dd94cf1c30c4f.s3tc.ctex"]
+source_file="res://assets/models/Crate_Crate_DefaultMaterial_BaseColor.png"
+dest_files=["res://.godot/imported/Crate_Crate_DefaultMaterial_BaseColor.png-278432f557cfc8d8b8bfc53ff4f38956.s3tc.ctex"]
 
 [params]
 

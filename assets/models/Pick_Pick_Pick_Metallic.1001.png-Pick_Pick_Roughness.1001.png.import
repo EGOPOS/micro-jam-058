@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cob3iwh2eds2g"
-path.s3tc="res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001-Pick_DefaultMaterial_Roughness.png-1130b6f32b0da97e9c57e1c8647de535.s3tc.ctex"
+uid="uid://27kr5cju75j4"
+path.s3tc="res://.godot/imported/Pick_Pick_Pick_Metallic.1001.png-Pick_Pick_Roughness.1001.png-4dd2a4e683427de4e03c71eba143629c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5f144071b8619b128cbb5abb3f215066"
+"md5": "6a423aaf9424c0b433ae9410c04c8846"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_DefaultMaterial_Metallic.1001-Pick_DefaultMaterial_Roughness.png"
-dest_files=["res://.godot/imported/Pick_Pick_DefaultMaterial_Metallic.1001-Pick_DefaultMaterial_Roughness.png-1130b6f32b0da97e9c57e1c8647de535.s3tc.ctex"]
+source_file="res://assets/models/Pick_Pick_Pick_Metallic.1001.png-Pick_Pick_Roughness.1001.png"
+dest_files=["res://.godot/imported/Pick_Pick_Pick_Metallic.1001.png-Pick_Pick_Roughness.1001.png-4dd2a4e683427de4e03c71eba143629c.s3tc.ctex"]
 
 [params]
 
