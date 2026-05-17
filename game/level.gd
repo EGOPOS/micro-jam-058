@@ -10,8 +10,7 @@ extends Node3D
 
 @export var high_tide_y: float = 0.0
 @export var low_tide_y: float = -5.0
-@export var high_tide_duration: float = 10.0 # Время, сколько вода побудет ВНИЗУ (в отливе)
-@export var low_tide_duration: float = 10.0 
+@export var tide_duration: float = 10.0 # Время, сколько вода побудет ВНИЗУ (в отливе)
 @export var transition_duration: float = 2.0
 @export var ease_curve: Curve
 var timer_multiplier: float = 1.0
@@ -70,7 +69,7 @@ func on_player_start_tides_interated(player: Player) -> void:
 	if _tides_active or _transitioning or not _is_high_tide:
 		return
 	
-	$StartTidesButton/CSGCylinder3D.transparency = .5
+	# SOUND
 	
 	_tides_active = true
 	_start_transition()
@@ -107,8 +106,7 @@ func _process(delta: float) -> void:
 		
 	if not _is_high_tide:
 		_timer += delta * timer_multiplier
-		if _timer >= high_tide_duration:
-			print("Время отлива вышло. Вода возвращается обратно наверх...")
+		if _timer >= tide_duration:
 			_start_transition()
 
 
@@ -132,7 +130,7 @@ func _update_transition(delta: float) -> void:
 		
 		if _is_high_tide:
 			_tides_active = false
-			$StartTidesButton/CSGCylinder3D.transparency = 0
+			# SOUND
 			
 		return
 	

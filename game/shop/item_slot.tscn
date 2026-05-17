@@ -35,7 +35,7 @@ size_flags_vertical = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1462990986]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 size_flags_vertical = 3
 
 [node name="SlotItemPrice" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/HBoxContainer" unique_id=297920182]
@@ -47,4 +47,5 @@ text = "0"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
+size_flags_horizontal = 6
 text = "Buy"

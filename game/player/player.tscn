@@ -40,10 +40,10 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjdng"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p3uph"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfwia"]
 render_priority = 0
 shader = ExtResource("4_bdb11")
-shader_parameter/tint = Color(0.51751465, 0.85188514, 0.97737354, 1)
+shader_parameter/tint = Color(0.4046822, 0.8130313, 0.95909876, 0.7254902)
 shader_parameter/wave_speed = 3.0
 shader_parameter/wave_freq = 10.0
 shader_parameter/wave_width = 1.0
@@ -131,7 +131,7 @@ far = 8000.0
 [node name="UnderWaterMesh" type="MeshInstance3D" parent="CameraPivot/Camera3D" unique_id=61105607]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0.031000063)
-material_override = SubResource("ShaderMaterial_p3uph")
+material_override = SubResource("ShaderMaterial_qfwia")
 mesh = SubResource("SphereMesh_bdb11")
 
 [node name="PickaxeLeft" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1555438760]
@@ -218,17 +218,17 @@ script = ExtResource("13_n270p")
 
 [node name="Right" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1713827149]
 stream = SubResource("AudioStreamRandomizer_kjljb")
-max_distance = 10.0
+max_db = 0.0
 panning_strength = 2.0
 
 [node name="Left" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1028653701]
 stream = SubResource("AudioStreamRandomizer_kjljb")
-max_distance = 10.0
+max_db = 0.0
 panning_strength = 2.0
 
 [node name="Unattach" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=979819024]
 stream = ExtResource("19_0e4oy")
-max_distance = 10.0
+max_db = 0.0
 panning_strength = 2.0
 
 [node name="Step" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=498751560]

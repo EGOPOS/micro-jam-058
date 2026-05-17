@@ -77,7 +77,7 @@ func update_dots() -> void:
 		if not hit.is_empty():
 			var camera: Camera3D = get_viewport().get_camera_3d()
 			var normal = hit.normal
-			var target_position = hit.position
+			var target_position = hit.position + normal * 0.1
 			
 			var up_vector = Vector3.UP
 			if abs(normal.dot(Vector3.UP)) > 0.99:

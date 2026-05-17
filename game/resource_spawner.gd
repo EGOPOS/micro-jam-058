@@ -22,7 +22,6 @@ extends Node3D
 @export var spawn_max_depth: float = -25.0
 @export var spawn_radius: float = 125
 @export var spawn_curve: Curve
-@export var resource_count: int = 400
 
 
 func _ready() -> void:

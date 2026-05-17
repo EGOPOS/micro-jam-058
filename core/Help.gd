@@ -1,49 +1,41 @@
 extends Node
 
-func get_camera_center_hit(ray_length: float = 10, collision_mask = get_collision_mask([1]),  with_areas: bool = false) -> Dictionary:
-	var viewport = get_viewport()
-	var camera = viewport.get_camera_3d()
+func get_camera_center_hit(ray_length: float = 10.0, collision_mask: int = 1, with_areas: bool = false) -> Dictionary:
+	var viewport := get_viewport()
+	var camera := viewport.get_camera_3d()
 	
-	# Если камеры нет на сцене, выходим
 	if not camera:
 		return {}
 		
-	# 1. Находим центр экрана
-	var screen_center = viewport.size / 2
+	# 1. Берем логический центр игрового экрана (разрешение проекта)
+	var logical_center := viewport.get_visible_rect().size / 2.0
 	
-	# 2. Проецируем луч из центра камеры в 3D пространство
-	var ray_origin = camera.project_ray_origin(screen_center)
-	var ray_normal = camera.project_ray_normal(screen_center)
-	var ray_to = ray_origin + ray_normal * ray_length
+	# 2. УМНОЖАЕМ НА МАТРИЦУ ТРАНСФОРМАЦИИ:
+	# Это переводит логические координаты в реальные пиксели вьюпорта,
+	# автоматически учитывая черные полосы, растяжение canvas_items или viewport.
+	var screen_center := viewport.get_canvas_transform() * logical_center
 	
-	# 3. Получаем доступ к прямому состоянию физического пространства (Физикс-сервер)
-	var space_state = camera.get_world_3d().direct_space_state
+	# 3. Проецируем луч из полученной математически точной точки
+	var ray_origin := camera.project_ray_origin(screen_center)
+	var ray_normal := camera.project_ray_normal(screen_center)
+	var ray_to := ray_origin + ray_normal * ray_length
 	
-	# 4. Создаем параметры запроса для Godot 4
-	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_to, collision_mask)
+	var space_state := camera.get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_to, collision_mask)
 	query.collide_with_areas = with_areas
 	
-	# Опционально: исключить определенные объекты (например, самого игрока)
-	# query.exclude = [self.get_rid()]
-	
-	# Опционально: настроить маску коллизий (по умолчанию проверяет все слои)
-	# query.collision_mask = 1 
-	
-	# 5. Пускаем луч
-	var result = space_state.intersect_ray(query)
-	
-	# 6. Обрабатываем результат
-	if not result.is_empty():
-		# Возвращаем точку пересечения в глобальных координатах
-		return result
-		
-	return {}
+	return space_state.intersect_ray(query)
 
 
 func get_mouse_center_offset() -> Vector2:
-	var viewport: Viewport = get_viewport()
-	var screen_center: Vector2 = viewport.get_visible_rect().size / 2
-	var mouse_pos: Vector2 = viewport.get_mouse_position()
+	var viewport := get_viewport()
+	
+	# Находим точный центр экрана в пикселях системы координат вьюпорта
+	var logical_center := viewport.get_visible_rect().size / 2.0
+	var screen_center := viewport.get_canvas_transform() * logical_center
+	
+	# Позиция мыши (она уже находится в пикселях вьюпорта)
+	var mouse_pos := viewport.get_mouse_position()
 	
 	return mouse_pos - screen_center
 

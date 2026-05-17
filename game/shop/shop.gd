@@ -36,6 +36,7 @@ func on_display_interacted(player: Player):
 		#get_tree().paused = true
 		Player.is_blocked = true
 		interface_container.show()
+		player.hud.hide()
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 		#var hit = Help.get_camera_center_hit(5, Help.get_collision_mask([4]))
 		#if not hit.is_empty():
@@ -47,6 +48,7 @@ func on_display_interacted(player: Player):
 		#get_tree().paused = false
 		Player.is_blocked = false
 		interface_container.hide()
+		player.hud.show()
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 		#sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 

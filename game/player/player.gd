@@ -555,6 +555,9 @@ func fall_return():
 	
 	# ТЕЛЕПОРТАЦИЯ: мгновенно меняем позицию
 	global_position = last_good_pos
+	create_tween().tween_method(func(a):
+		global_position = last_good_pos,
+	0, 100, .2)
 	
 	# СБРОС ФИЗИКИ: обязательно обнуляем скорость, иначе игрок "продолжит падать" на новом месте
 	velocity = Vector3.ZERO
