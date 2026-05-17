@@ -1,0 +1,29 @@
+[gd_resource type="Sky" format=3 uid="uid://cjrrw10lcwmep"]
+
+[ext_resource type="Shader" uid="uid://bs8imjirdacih" path="res://assets/materials/shaders/sky.gdshader" id="1_8oxjc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vuud0"]
+shader = ExtResource("1_8oxjc")
+shader_parameter/offset_horizon = 1.4901200051653518e-08
+shader_parameter/horizon_intensity = -8.5149999294625
+shader_parameter/sun_set = Color(0.06316131, 0.18569228, 0.21804222, 1)
+shader_parameter/horizon_color_day = Color(0, 0, 0, 1)
+shader_parameter/horizon_color_night = Color(0, 0, 0, 1)
+shader_parameter/sun_color = Color(1, 1, 1, 1)
+shader_parameter/sun_radius = 0.0550000026125
+shader_parameter/flat_sun = true
+shader_parameter/moon_color = Color(1, 1, 1, 1)
+shader_parameter/moon_radius = 0.15
+shader_parameter/moon_crescent = -0.3
+shader_parameter/dark_falloff = 4.0
+shader_parameter/day_bottom_color = Color(0.83829933, 0.99999994, 0.9971259, 1)
+shader_parameter/day_top_color = Color(0.6982726, 0.91426796, 1, 1)
+shader_parameter/night_bottom_color = Color(0, 0, 0.2, 1)
+shader_parameter/night_top_color = Color(0, 0, 0, 1)
+shader_parameter/base_noise_scale = 0.2
+shader_parameter/stars_speed = 0.3
+shader_parameter/stars_cutoff = 0.08
+shader_parameter/stars_sky_color = Color(0, 0.2, 0.1, 1)
+
+[resource]
+sky_material = SubResource("ShaderMaterial_vuud0")

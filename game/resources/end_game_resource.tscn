@@ -2,23 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_j13u7"]
 [ext_resource type="Script" uid="uid://bulpdnr8i7rym" path="res://game/resources/end_game_resource.gd" id="2_fptot"]
+[ext_resource type="PackedScene" uid="uid://c0utf5iiah10u" path="res://assets/models/Key.glb" id="3_mwxqr"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_j13u7"]
-radius = 0.8090933
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fptot"]
-shading_mode = 0
-albedo_color = Color(0.9843137, 0.73333335, 0.37254903, 1)
-proximity_fade_distance = 26.96
-distance_fade_mode = 2
-distance_fade_min_distance = 20.0
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mwxqr"]
 
 [node name="EndGameResource" unique_id=1501890312 groups=["endgame"] instance=ExtResource("1_j13u7")]
 script = ExtResource("2_fptot")
 
-[node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
-shape = SubResource("SphereShape3D_j13u7")
+[node name="Key" parent="." index="0" unique_id=1107725165 instance=ExtResource("3_mwxqr")]
+transform = Transform3D(0.29259807, -0.066229664, -2.8949905e-09, 0, -1.3113417e-08, 0.3, -0.066229664, -0.29259807, -1.2789868e-08, 0, 0, 0)
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="." index="1" unique_id=775831940]
-radius = 0.8438802
-material = SubResource("StandardMaterial3D_fptot")
+[node name="CollisionShape3D" parent="." index="1" unique_id=77926579]
+transform = Transform3D(0.0013955161, -0.9991702, -0.04070432, 0.99998736, 0.0011978857, 0.0048792646, -0.004826466, -0.04071063, 0.99915946, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mwxqr")
+
+[editable path="Key"]

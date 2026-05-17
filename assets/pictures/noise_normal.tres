@@ -1,0 +1,10 @@
+[gd_resource type="NoiseTexture2D" format=3 uid="uid://cod5avx4l420f"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qirjs"]
+noise_type = 0
+seed = 3
+frequency = 0.0059
+
+[resource]
+noise = SubResource("FastNoiseLite_qirjs")
+as_normal_map = true

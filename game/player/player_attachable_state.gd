@@ -44,10 +44,11 @@ func physics_update(delta):
 
 func input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("throw") and is_can_interact():
-		player.backpack_component.put_on_floor_from_storage()
+		var r = player.backpack_component.put_on_floor_from_storage()
 		player.last_interaction_time = get_time()
 		# SOUND
-		player.sfx_handler.play("Drop")
+		if r != null:
+			player.sfx_handler.play("Drop")
 
 
 func is_can_interact():

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bnxwefkufbcy2" path="res://core/damage_components/health_component.gd" id="2_sns1g"]
 [ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
 [ext_resource type="Script" uid="uid://bjeirc3etwa0f" path="res://game/player/backpack_component.gd" id="3_j0mij"]
+[ext_resource type="Shader" uid="uid://cpom8e1tbcenb" path="res://assets/materials/shaders/underwater.gdshader" id="4_bdb11"]
 [ext_resource type="PackedScene" uid="uid://bqd8i45iw4j4n" path="res://assets/models/Pick.glb" id="4_gb4gm"]
 [ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
 [ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
@@ -29,7 +30,7 @@
 [ext_resource type="AudioStream" uid="uid://4eaa5se2j3ki" path="res://assets/sounds/player/sloppy_landing 03.ogg" id="27_wrff0"]
 [ext_resource type="AudioStream" uid="uid://cms5opmrwdd07" path="res://assets/sounds/player/sloppy_landing 04.ogg" id="28_n0jev"]
 [ext_resource type="AudioStream" uid="uid://ba3ou0u2dymxu" path="res://assets/sounds/player/sloppy_landing 05.ogg" id="29_uv21l"]
-[ext_resource type="AudioStream" uid="uid://dv7fkubq1afej" path="res://assets/sounds/player/Wind_Fall.wav" id="30_22cju"]
+[ext_resource type="AudioStream" uid="uid://dn1a0m0vpiuh2" path="res://assets/sounds/player/wind_slop 01.ogg" id="30_x6a6n"]
 [ext_resource type="AudioStream" uid="uid://t14wpnnb07yk" path="res://assets/sounds/player/pickup_slop 01.mp3" id="31_n0jev"]
 [ext_resource type="AudioStream" uid="uid://bfp6xueb3pmxn" path="res://assets/sounds/player/drop_slop 01.ogg" id="32_uv21l"]
 [ext_resource type="AudioStream" uid="uid://bsdk1mwbk6f47" path="res://assets/sounds/water/sloppy_water_landing 01.ogg" id="33_cy4e0"]
@@ -38,6 +39,19 @@
 [ext_resource type="AudioStream" uid="uid://0rxuel8sxbqc" path="res://assets/sounds/signal slop 01.ogg" id="36_x6a6n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fjdng"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p3uph"]
+render_priority = 0
+shader = ExtResource("4_bdb11")
+shader_parameter/tint = Color(0.51751465, 0.85188514, 0.97737354, 1)
+shader_parameter/wave_speed = 3.0
+shader_parameter/wave_freq = 10.0
+shader_parameter/wave_width = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_bdb11"]
+flip_faces = true
+radius = 0.3
+height = 0.6
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kjljb"]
 random_pitch = 1.0717734
@@ -89,8 +103,9 @@ max_attach_distance = 5.0
 lean_amount = 6.0
 lean_speed = 3.0
 start_recover_from = 0.5
-wind_velocity = 7.0
+wind_velocity = 20.0
 wind_max_db = 5.0
+wind_min_db = -60.0
 death_fall_velocity = -60.0
 
 [node name="HealthComponent" type="Node" parent="." unique_id=901680601]
@@ -112,6 +127,12 @@ unique_name_in_owner = true
 current = true
 fov = 90.0
 far = 8000.0
+
+[node name="UnderWaterMesh" type="MeshInstance3D" parent="CameraPivot/Camera3D" unique_id=61105607]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0.031000063)
+material_override = SubResource("ShaderMaterial_p3uph")
+mesh = SubResource("SphereMesh_bdb11")
 
 [node name="PickaxeLeft" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1555438760]
 unique_name_in_owner = true
@@ -220,7 +241,7 @@ stream = SubResource("AudioStreamRandomizer_qxyrc")
 
 [node name="Wind" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=837599599]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-stream = ExtResource("30_22cju")
+stream = ExtResource("30_x6a6n")
 
 [node name="Pickup" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=42172526]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

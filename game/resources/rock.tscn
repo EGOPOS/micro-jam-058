@@ -12,3 +12,4 @@ radius = 0.8432984
 shape = SubResource("SphereShape3D_2uo7d")
 
 [node name="Rock" parent="." index="1" unique_id=183874784 instance=ExtResource("2_t7do2")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

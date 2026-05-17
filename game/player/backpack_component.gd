@@ -26,7 +26,10 @@ func put_on_floor_from_storage() -> SellableResource:
 	if hit.is_empty() or storage.is_empty():
 		return
 	
-	var resource = storage.back()
+	
+	var resource = _get_next_resource()
+	if resource == null: return null
+	
 	resource.global_position = hit.position
 	resource.show()
 	storage.erase(resource)
@@ -40,13 +43,24 @@ func take_from_storage() -> SellableResource:
 	if storage.is_empty():
 		return null
 	
-	var resource = storage.back()
+	var resource = _get_next_resource()
+	if resource == null: return null
+	
 	storage.erase(resource)
 	
 	overweight_changed.emit()
 	
 	return resource
 
+
+func _get_next_resource():
+	var resource = storage.back()
+	if (resource as Node).is_in_group("endgame"):
+		if storage.size() == 1:
+			return null
+		else:
+			return storage.front()
+	return resource
 
 func get_overweight():
 	return max(storage.size() - payload, 0)

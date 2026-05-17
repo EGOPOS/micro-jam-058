@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dn1a0m0vpiuh2"
+path="res://.godot/imported/wind_slop 01.ogg-61016a8d544bb2734a0a2c01e16fc324.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/player/wind_slop 01.ogg"
+dest_files=["res://.godot/imported/wind_slop 01.ogg-61016a8d544bb2734a0a2c01e16fc324.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

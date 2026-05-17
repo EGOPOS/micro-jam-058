@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cy3ux7gnjc23n"]
+
+[ext_resource type="Shader" uid="uid://b0bgabuwdegb" path="res://assets/materials/shaders/water.gdshader" id="1_oa6jj"]
+[ext_resource type="Texture2D" uid="uid://dxx7jwe1p1trk" path="res://assets/pictures/noise.tres" id="2_41l7l"]
+[ext_resource type="Texture2D" uid="uid://cod5avx4l420f" path="res://assets/pictures/noise_normal.tres" id="3_oxwoh"]
+[ext_resource type="Texture2D" uid="uid://hh5rnja4cx41" path="res://assets/pictures/noise_normal2.tres" id="4_nr0o1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_oa6jj")
+shader_parameter/norRand1 = ExtResource("3_oxwoh")
+shader_parameter/norRand2 = ExtResource("4_nr0o1")
+shader_parameter/dir = Vector2(-0.2, 1)
+shader_parameter/alpha = 0.75000003236512
+shader_parameter/distScaler = 0.1
+shader_parameter/baseCol = Color(0.3855903, 0.65174246, 0.99999934, 1)
+shader_parameter/deepCol = Color(1.1551381e-06, 0.6307563, 0.57643324, 1)
+shader_parameter/deepColOffset = 0.0
+shader_parameter/noiseScaler = 0.004
+shader_parameter/waveSpeedScaler = 1.0
+shader_parameter/vertexSpeedScaler = 1.0
+shader_parameter/fresnelColor = Color(0, 0, 0, 1)
+shader_parameter/edgeColor = Color(0, 0, 0, 1)
+shader_parameter/edgeThreshold = 0.1
+shader_parameter/edgeNoise = ExtResource("2_41l7l")
+shader_parameter/windRippleDegScaler = 1.0

@@ -119,6 +119,8 @@ signal left_attach_toggled(hit)
 static var is_blocked: bool = false
 var is_respawning: bool = false
 
+@onready var underwater_mesh: MeshInstance3D = %UnderWaterMesh
+
 
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
@@ -131,7 +133,7 @@ func apply_friction(delta: float, multiplier: float = 1.0):
 	velocity = velocity.lerp(Vector3(0, velocity.y, 0), movement_friction * delta * multiplier)
 
 func apply_jump_velocity(multiplier: float = 1.0):
-	velocity.y += jump_velocity * multiplier
+	velocity.y = jump_velocity * multiplier
 
 func apply_jump_gravity(delta: float):
 	velocity.y += jump_gravity*delta
@@ -189,6 +191,7 @@ func _ready() -> void:
 	
 	if camera:
 		default_fov = camera.fov
+	underwater_mesh.hide()
 	
 	Global.player = self
 
@@ -208,7 +211,7 @@ func step_process(delta: float):
 		sfx_handler.play("Step")
 
 # Вызывать в _process или _physics_process игрока
-func water_sound_process(delta: float, current_water_level: float):
+func water_process(delta: float, current_water_level: float):
 	# Проверяем, находится ли центр (или ноги) игрока ниже уровня воды
 	var is_in_water: bool = global_position.y < current_water_level
 	
@@ -220,6 +223,7 @@ func water_sound_process(delta: float, current_water_level: float):
 		
 		sfx_handler.get_player("WaterIn").global_position = splash_pos
 		sfx_handler.play("WaterIn")
+		underwater_mesh.show()
 		
 	# ЭФФЕКТ ВЫНЫРИВАНИЯ (Выход из воды)
 	elif not is_in_water and _was_in_water:
@@ -228,6 +232,7 @@ func water_sound_process(delta: float, current_water_level: float):
 		
 		sfx_handler.get_player("WaterOut").global_position = splash_pos
 		sfx_handler.play("WaterOut")
+		underwater_mesh.hide()
 		
 	# Сохраняем текущее состояние для следующего кадра
 	_was_in_water = is_in_water
@@ -387,7 +392,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and velocity.length() > 3:
 		# SOUND
 		step_process(delta * remap(velocity.length(), 0, 20, 0, 1))
-	water_sound_process(delta, Global.level.get_current_water_level())
+	water_process(delta, Global.level.get_current_water_level())
 
 	if not is_on_floor() and velocity.y < -5.0:
 		# Считаем интенсивность от 0.0 до 1.0 на основе текущей (!) скорости
