@@ -1,18 +1,18 @@
 extends Node
 
-var cash: int = 400:
+var cash: int = 0:
 	set(value):
 		cash = value
 		cash_changed.emit()
 
 var shop_products: Dictionary = {
 	"second_pickaxe": {"name": "Second pickaxe", "price": 100, "callback": second_pickaxe_callback},
-	"deep_increase": {"name": "Increase tides deep", "price": 1000, "callback": increase_tides_deep_callback, "level": 0},
-	"duration_increase": {"name": "Increase tides duration", "price": 50, "callback": increase_tides_duration_callback, "level": 0},
-	"climbing_speed": {"name": "Climbing speed", "price": 2000, "callback": increase_climbing_speed_callback, "level": 0},
-	"stamine_increase": {"name": "Increase Stamina", "price": 500, "callback": increase_stamina_callback, "level": 0},
-	"weight_increase": {"name": "Increase Weight Capacity", "price": 600, "callback": increase_weight_capacity_callback, "level": 0},
-	"radar": {"name": "Target radar", "price": 100_000, "callback": radar_callback},
+	"stamine_increase": {"name": "Increase Stamina", "price": 50, "callback": increase_stamina_callback, "level": 0},
+	"weight_increase": {"name": "Increase max weight", "price": 50, "callback": increase_weight_capacity_callback, "level": 0},
+	"deep_increase": {"name": "Increase tides depth", "price": 30, "callback": increase_tides_deep_callback, "level": 0},
+	"duration_increase": {"name": "Increase tides duration", "price": 20, "callback": increase_tides_duration_callback, "level": 0},
+	"climbing_speed": {"name": "Climbing speed", "price": 200, "callback": increase_climbing_speed_callback, "level": 0},
+	"radar": {"name": "Target radar", "price": 5000, "callback": radar_callback},
 }
 var default_shop_products = shop_products.duplicate(true)
 var shop_interface: Control
@@ -40,18 +40,21 @@ var default_max_weight: float      # Новая переменная
 
 signal cash_changed
 signal endgame_founded
+signal comics_readed
 
 func _ready() -> void:
 	endgame_founded.connect(_on_endgame_founded)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+	
+	comics_readed.connect(func():
+		AmbientPlayer.play_ambient(preload("uid://cmh88cprg8o0k"))
+		AmbientPlayer.play_music(preload("uid://t8oqsfwkyu20"), Vector3(0, 3, 0), 80)
+	)
 
 
 func _on_endgame_founded():
 	#player.is_blocked = true
 	player.hud.radar_container.hide()
-	
-	#Fade.fade_out(1.0)
-	#await get_tree().create_timer(1.0).timeout
-	#Fade.fade_in(1.0)
 	
 	level.low_tide_y -= 500
 	level.transition_duration = 5
@@ -69,9 +72,6 @@ func _on_endgame_founded():
 	
 	await get_tree().create_timer(level.transition_duration).timeout
 	level.timer_multiplier = 0.0
-	
-	#DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
-	#get_tree().change_scene_to_file("res://game/credits/credits.tscn")
 
 
 
@@ -138,7 +138,7 @@ func increase_weight_capacity_callback():
 	shop_products.weight_increase.price = default_shop_products.weight_increase.price * get_mult("weight_increase", 2)
 	
 	# 4. Обновляем имя в интерфейсе
-	shop_products.weight_increase.name = "Weight Cap: " + str(default_max_weight + increase_value * (get_lvl("weight_increase") + 1))
+	shop_products.weight_increase.name = "Max weight: " + str(default_max_weight + increase_value * (get_lvl("weight_increase") + 1))
 	
 	# 5. Применяем изменения к компоненту рюкзака игрока
 	if player.backpack_component:
@@ -153,12 +153,11 @@ func increase_weight_capacity_callback():
 		shop_products.erase("weight_increase")
 
 
-
 func increase_tides_deep_callback():
 	const increase_value = 50
 	next_lvl("deep_increase")
 	shop_products.deep_increase.price = default_shop_products.deep_increase.price * pow(2, shop_products.deep_increase.level)
-	shop_products.deep_increase.name = str(default_deep + increase_value * (get_lvl("deep_increase") + 1))
+	shop_products.deep_increase.name = "Tides depth: " + str(default_deep + increase_value * (get_lvl("deep_increase") + 1)) + "m"
 	
 	level.low_tide_y -= increase_value
 	
@@ -170,11 +169,11 @@ func increase_tides_deep_callback():
 
 
 func increase_tides_duration_callback():
-	const increase_value = 10
+	const increase_value = 15
 	next_lvl("duration_increase")
 	
 	shop_products.duration_increase.price = default_shop_products.duration_increase.price * get_mult("duration_increase", 3)
-	shop_products.duration_increase.name = str(default_duration + increase_value * (get_lvl("duration_increase") + 1))
+	shop_products.duration_increase.name = "Tides duration: " + str(default_duration + increase_value * (get_lvl("duration_increase") + 1))
 	
 	level.tide_duration += increase_value
 	

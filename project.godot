@@ -14,10 +14,13 @@ universal_fade/patterns_directory="res://addons/UniversalFade/Patterns"
 
 [application]
 
-config/name="MicroJam58"
+config/name="Tidefall"
 run/main_scene="uid://crujqisamrlts"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/stretch_mode=2
+boot_splash/image="uid://dxcx87oke6js0"
+config/icon="uid://vihb7nnjusyu"
 
 [audio]
 
@@ -28,15 +31,21 @@ buses/default_bus_layout="uid://djdn144ovtyrx"
 InputBuffer="*uid://dsbyw8nb3jqeg"
 Help="*uid://flag5qla2lym"
 Global="*res://core/Global.gd"
+AmbientPlayer="*uid://bu5x31hqk776n"
 
 [display]
 
-window/stretch/mode="viewport"
+window/size/mode=3
+window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [global_group]
 
 endgame="for last resource"
+
+[gui]
+
+theme/custom_font="uid://br2eha5x7usc6"
 
 [input]
 

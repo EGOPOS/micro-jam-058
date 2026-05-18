@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://j7d62ug02ai"]
 
 [ext_resource type="Script" uid="uid://dl2fqx80wi5mp" path="res://game/credits/credits.gd" id="1_cred"]
+[ext_resource type="Texture2D" uid="uid://dxcx87oke6js0" path="res://assets/pictures/slop_05.png" id="2_5l0q7"]
+[ext_resource type="PackedScene" uid="uid://c22ye2p2krre1" path="res://assets/models/Title.glb" id="3_o61dw"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_o61dw"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o61dw"]
+transparency = 1
+shading_mode = 0
 
 [node name="Credits" type="Control" unique_id=1659263353]
 layout_mode = 3
@@ -11,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cred")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1019392235]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1341294507]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,15 +29,59 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="." unique_id=1728695229]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1339478661]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Thank you for playing!
+texture = ExtResource("2_5l0q7")
+expand_mode = 1
+stretch_mode = 4
 
-MicroJam 58"
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1718116965]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_o61dw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2133923172]
+unique_name_in_owner = true
+transparent_bg = true
+
+[node name="Title" parent="SubViewport" unique_id=733580294 instance=ExtResource("3_o61dw")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -16, -179)
+
+[node name="Text_001" parent="SubViewport/Title" index="0" unique_id=1252438413]
+material_override = SubResource("StandardMaterial3D_o61dw")
+
+[node name="ThxForP;aying" parent="SubViewport" unique_id=521523523 instance=ExtResource("3_o61dw")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -16, -179)
+
+[node name="Text_001" parent="SubViewport/ThxForP;aying" index="0" unique_id=1252438413]
+material_override = SubResource("StandardMaterial3D_o61dw")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=203279688]
+
+[node name="Label" type="Label" parent="." unique_id=1728695229]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Thank you for playing!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[editable path="SubViewport/Title"]
+[editable path="SubViewport/ThxForP;aying"]

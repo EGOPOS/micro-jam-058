@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ctg5nhl77i2r4" path="res://assets/pictures/noise_1.tres" id="3_0atw8"]
 
 [resource]
-render_priority = 0
+render_priority = -1
 shader = ExtResource("1_46har")
 shader_parameter/surfaceNoise = ExtResource("3_0atw8")
 shader_parameter/distortNoise = ExtResource("2_hvjxu")

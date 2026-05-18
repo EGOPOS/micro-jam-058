@@ -7,6 +7,7 @@
 size = Vector3(1.9772949, 1.0776367, 1.1372986)
 
 [node name="Crate" unique_id=1501890312 instance=ExtResource("1_f7406")]
+price = 500
 
 [node name="Crate" parent="." index="0" unique_id=1505453243 instance=ExtResource("2_oa35n")]
 

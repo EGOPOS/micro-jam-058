@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b767ragnk11ls"]
+
+[ext_resource type="Texture2D" uid="uid://b1q2rqk5yggq" path="res://assets/models/Pointers_wood_slop_01.png" id="1_d7t33"]
+
+[resource]
+resource_name = "Far_3.001"
+transparency = 1
+albedo_texture = ExtResource("1_d7t33")
+roughness = 0.85106385

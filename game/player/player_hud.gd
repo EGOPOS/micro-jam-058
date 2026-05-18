@@ -9,6 +9,7 @@ class_name PlayerHUD extends CanvasLayer
 
 @onready var radar_container: TextureRect = %RadarContainer
 @onready var blink_shader_rect: ColorRect = %BlinkShaderRect
+@onready var tide_bar: ProgressBar = %TideBar
 
 var radar_mat: ShaderMaterial
 var target_resource: SellableResource
@@ -39,6 +40,10 @@ func _process(delta: float) -> void:
 		stamina_bar.max_value = player.max_stamina
 		stamina_bar.value = player.stamina
 		update_dots()
+		
+		tide_bar.max_value = Global.level.tide_duration
+		tide_bar.value = Global.level._timer
+		tide_bar.visible = not Global.level._is_high_tide and Global.level.timer_multiplier != 0
 	
 	if radar_container.visible:
 		var distance = target_resource.global_position.distance_to(player.global_position)

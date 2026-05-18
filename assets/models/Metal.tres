@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bf3dicdp046ve"]
+
+[ext_resource type="Texture2D" uid="uid://b8knoco2qrabc" path="res://assets/models/Tutorial_Board_iron_slop_01.png" id="1_14mvx"]
+
+[resource]
+resource_name = "Metal"
+cull_mode = 2
+albedo_texture = ExtResource("1_14mvx")
+metallic = 0.7092199
+roughness = 0.3014188

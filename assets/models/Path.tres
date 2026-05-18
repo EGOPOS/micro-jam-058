@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cyg8jfro6lgos"]
+
+[ext_resource type="Texture2D" uid="uid://dhxxhdu28yvwl" path="res://assets/models/Pointers_path_to_the_secret_door-removebg-preview.png" id="1_fogl7"]
+
+[resource]
+resource_name = "Path"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_fogl7")
+roughness = 0.5
+distance_fade_min_distance = 20.0
+distance_fade_max_distance = 0.0

@@ -5,7 +5,6 @@ func enter(data):
 	player.camera_animation_strength = player.camera_animation_air_strength
 	player.jump(data.multiplier if data.has("multiplier") else 1.0)
 
-
 func update(delta):
 	super(delta)
 	var direction = player.get_direction()

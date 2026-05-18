@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://blwi7v41xfuvt"]
+
+[ext_resource type="Texture2D" uid="uid://sls7fps02iki" path="res://assets/models/Tutorial_Board_sucker_guide.png" id="1_tm5aq"]
+
+[resource]
+resource_name = "Material.038"
+transparency = 2
+alpha_scissor_threshold = 0.489
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_tm5aq")
+roughness = 0.5

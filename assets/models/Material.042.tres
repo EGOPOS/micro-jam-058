@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://decsv1gm8lnrd"]
+
+[ext_resource type="Texture2D" uid="uid://dhi8q3a1p1256" path="res://assets/models/Tutorial_Board_keys_guide.png" id="1_kix46"]
+
+[resource]
+resource_name = "Material.042"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_kix46")
+roughness = 0.5

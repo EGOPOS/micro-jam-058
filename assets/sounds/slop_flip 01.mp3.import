@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cd5y5kjsrps53"
+path="res://.godot/imported/slop_flip 01.mp3-faf283ef56c2992fa8b403d9ee424517.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/slop_flip 01.mp3"
+dest_files=["res://.godot/imported/slop_flip 01.mp3-faf283ef56c2992fa8b403d9ee424517.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

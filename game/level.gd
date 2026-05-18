@@ -22,6 +22,8 @@ var timer_multiplier: float = 1.0
 
 # Наш локальный менеджер звуков
 @onready var sfx_handler: SfxHandler = $SfxHandler 
+@onready var game_finish_interaction_area: InteractionArea = %GameFinishInteractionArea
+@export var game_finisher_anim_player: AnimationPlayer
 
 # Внутренние переменные
 var _timer: float = 0.0
@@ -63,6 +65,33 @@ func _ready() -> void:
 		
 		# Привязываем звук СТРОГО к позиции кнопки/рычага насоса, чтобы он не двигался
 		_sucker_loop_player.global_position = $StartTidesButton.global_position
+	
+	game_finish_interaction_area.can_interact = false
+	Global.endgame_founded.connect(on_endgame_founded)
+	
+	game_finish_interaction_area.interacted.connect(on_game_finisher_interacted)
+
+func on_endgame_founded():
+	game_finish_interaction_area.can_interact = true
+
+
+func on_game_finisher_interacted(player: Player):
+	game_finish_interaction_area.can_interact = false
+	game_finisher_anim_player.play("Door_Open")
+	sfx_handler.play("Open")
+	
+	Player.is_blocked = true
+	
+	await get_tree().create_timer(.5).timeout
+	
+	Fade.fade_out(1.0)
+	await get_tree().create_timer(1.0).timeout
+	Fade.fade_in(1.0)
+	
+	AmbientPlayer.stop_ambient()
+	
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_file("res://game/credits/credits.tscn")
 
 
 func on_player_start_tides_interated(player: Player) -> void:
@@ -70,6 +99,7 @@ func on_player_start_tides_interated(player: Player) -> void:
 		return
 	
 	# SOUND
+	sfx_handler.play("StartSuck")
 	
 	_tides_active = true
 	_start_transition()
@@ -78,7 +108,15 @@ func on_player_start_tides_interated(player: Player) -> void:
 func _process(delta: float) -> void:
 	if water_node == null:
 		return
-
+	
+	var start_point = Vector3()
+	var flat_vector = Vector3(player.global_position.x, 0, player.global_position.z)
+	var distance = flat_vector.distance_to(start_point)
+	if distance > 240:
+		var dir = (flat_vector - start_point).normalized()
+		var target_position = player.global_position - dir
+		player.global_position = player.global_position.lerp(target_position, 1.0)
+	
 	# Логика выталкивания игрока из воды
 	var gloal_wl = water_node.global_position.y
 	if player.global_position.y < gloal_wl:

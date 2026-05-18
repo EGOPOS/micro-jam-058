@@ -1,10 +1,18 @@
 [gd_scene format=3 uid="uid://b82x4k2k3v5u5"]
 
 [ext_resource type="Script" uid="uid://cx5kmkjrwolhr" path="res://game/story_comics/story_comics.gd" id="1_story"]
-[ext_resource type="Texture2D" uid="uid://beai17bnby6e4" path="res://assets/pictures/4674764764.png" id="2_4xufv"]
-[ext_resource type="Texture2D" uid="uid://bds46wdhnym8w" path="res://assets/pictures/Без имени.png" id="3_g6t1y"]
+[ext_resource type="Texture2D" uid="uid://dqkdom7cq5ua6" path="res://assets/pictures/slop_04.png" id="2_4lrng"]
+[ext_resource type="Texture2D" uid="uid://ranlr3nqrypq" path="res://assets/pictures/s01.png" id="2_oj78y"]
+[ext_resource type="Texture2D" uid="uid://d13qvd03mcefl" path="res://assets/pictures/slop_06.png" id="3_4c85p"]
+[ext_resource type="Texture2D" uid="uid://bixlfi5wiewu6" path="res://assets/pictures/slop_02.png" id="3_nbs1q"]
+[ext_resource type="Script" uid="uid://cy57umfi0ubrs" path="res://core/sfx_handler.gd" id="4_oj78y"]
+[ext_resource type="AudioStream" uid="uid://cd5y5kjsrps53" path="res://assets/sounds/slop_flip 01.mp3" id="5_nbs1q"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hfwkb"]
+load_path = "res://.godot/imported/slop_03.png-e47e0b6dbf27f2c9d13206c59ecbf16c.ctex"
 
 [node name="StoryComics" type="Control" unique_id=1781734787]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_story")
-frames = Array[Texture]([ExtResource("2_4xufv"), ExtResource("3_g6t1y")])
+frames = Array[Texture]([ExtResource("2_oj78y"), ExtResource("3_nbs1q"), SubResource("CompressedTexture2D_hfwkb"), ExtResource("2_4lrng"), ExtResource("3_4c85p")])
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1992422733]
 layout_mode = 1
@@ -48,3 +56,11 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Press anywhere to continue"
 horizontal_alignment = 2
+
+[node name="SfxHandler" type="Node" parent="." unique_id=1959043402]
+unique_name_in_owner = true
+script = ExtResource("4_oj78y")
+metadata/_custom_type_script = "uid://cy57umfi0ubrs"
+
+[node name="Flip" type="AudioStreamPlayer" parent="SfxHandler" unique_id=1372356562]
+stream = ExtResource("5_nbs1q")

@@ -7,6 +7,7 @@
 radius = 0.8432984
 
 [node name="Rock" unique_id=1501890312 instance=ExtResource("1_2uo7d")]
+price = 10
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
 shape = SubResource("SphereShape3D_2uo7d")

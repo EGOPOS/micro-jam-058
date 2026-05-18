@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ja2ilvc601ux"]
+
+[ext_resource type="Texture2D" uid="uid://dc63fehdw5olc" path="res://assets/models/Tutorial_Board_wood_slop_01.png" id="1_pn53m"]
+
+[resource]
+resource_name = "Far_3"
+cull_mode = 2
+albedo_texture = ExtResource("1_pn53m")
+roughness = 0.85106385

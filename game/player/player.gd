@@ -161,6 +161,7 @@ func reset_jump_buffer():
 	jump_buffer = max_jump_buffer
 
 func jump(multiplier: float = 1.0):
+	#sfx_handler.play("Jump")
 	jump_buffer -= 1
 	apply_jump_velocity(multiplier)
 
@@ -223,6 +224,7 @@ func water_process(delta: float, current_water_level: float):
 		
 		sfx_handler.get_player("WaterIn").global_position = splash_pos
 		sfx_handler.play("WaterIn")
+		AmbientPlayer.mute_to_water(600, 0.05)
 		underwater_mesh.show()
 		
 	# ЭФФЕКТ ВЫНЫРИВАНИЯ (Выход из воды)
@@ -232,6 +234,7 @@ func water_process(delta: float, current_water_level: float):
 		
 		sfx_handler.get_player("WaterOut").global_position = splash_pos
 		sfx_handler.play("WaterOut")
+		AmbientPlayer.unmute_from_water(0.25)
 		underwater_mesh.hide()
 		
 	# Сохраняем текущее состояние для следующего кадра
@@ -501,7 +504,7 @@ func _input(event: InputEvent):
 		camera.rotation.x = clamp(camera.rotation.x + -event.relative.y * mouse_sensivity, -camera_clamp_angle, camera_clamp_angle)
 		camera.rotation.y += -event.relative.x * mouse_sensivity
 	
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Engine.is_editor_hint() and Input.is_action_just_pressed("ui_cancel"):
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED else DisplayServer.MOUSE_MODE_CAPTURED)
 
 	#if Input.is_key_pressed(KEY_R):

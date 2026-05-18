@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cmqyykd5qmis1"]
+
+[ext_resource type="Texture2D" uid="uid://csd43cq4x325r" path="res://assets/models/Tutorial_Board_loop_guide.png" id="1_gbm2x"]
+
+[resource]
+resource_name = "Material.043"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_gbm2x")
+roughness = 0.5

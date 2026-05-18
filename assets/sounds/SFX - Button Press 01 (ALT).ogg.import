@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dh7wmewoglrbu"
+path="res://.godot/imported/SFX - Button Press 01 (ALT).ogg-59248d2faab942e2d0cc3d36089a24b1.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sounds/SFX - Button Press 01 (ALT).ogg"
+dest_files=["res://.godot/imported/SFX - Button Press 01 (ALT).ogg-59248d2faab942e2d0cc3d36089a24b1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

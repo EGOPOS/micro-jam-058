@@ -27,6 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://jxa4xew1ax1b" path="res://assets/sounds/player/slops 05.ogg" id="24_y6drd"]
 [ext_resource type="AudioStream" uid="uid://cegyibllnl2wo" path="res://assets/sounds/player/sloppy_landing 01.ogg" id="25_w24bm"]
 [ext_resource type="AudioStream" uid="uid://bkawm7mdxpxlb" path="res://assets/sounds/player/sloppy_landing 02.ogg" id="26_22cju"]
+[ext_resource type="AudioStream" uid="uid://lf2irhqdmhh" path="res://assets/sounds/player/Jump.wav" id="26_p3uph"]
 [ext_resource type="AudioStream" uid="uid://4eaa5se2j3ki" path="res://assets/sounds/player/sloppy_landing 03.ogg" id="27_wrff0"]
 [ext_resource type="AudioStream" uid="uid://cms5opmrwdd07" path="res://assets/sounds/player/sloppy_landing 04.ogg" id="28_n0jev"]
 [ext_resource type="AudioStream" uid="uid://ba3ou0u2dymxu" path="res://assets/sounds/player/sloppy_landing 05.ogg" id="29_uv21l"]
@@ -73,6 +74,12 @@ stream_2/stream = ExtResource("22_bp242")
 stream_3/stream = ExtResource("23_cgi3i")
 stream_4/stream = ExtResource("24_y6drd")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfwia"]
+random_pitch = 1.0905077
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("26_p3uph")
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qxyrc"]
 random_pitch = 1.0717734
 random_volume_offset_db = 3.0
@@ -97,6 +104,7 @@ script = ExtResource("2_aa75y")
 jump_height = 1.5
 jump_time_to_peak = 0.2
 camera_clamp_angle = 1.5707963267948966
+mouse_sensivity = 0.003
 fov_falling = 10.0
 fov_acceleration = 20.0
 max_attach_distance = 5.0
@@ -234,6 +242,10 @@ panning_strength = 2.0
 [node name="Step" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=498751560]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 stream = SubResource("AudioStreamRandomizer_w24bm")
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1352575900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = SubResource("AudioStreamRandomizer_qfwia")
 
 [node name="Land" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1104087664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

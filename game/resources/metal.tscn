@@ -8,6 +8,7 @@ height = 0.5909424
 radius = 1.2387695
 
 [node name="Metal" unique_id=1501890312 instance=ExtResource("1_x4rcj")]
+price = 100
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=77926579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018981934, 0)

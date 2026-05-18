@@ -8,6 +8,9 @@ extends Node3D
 @onready var sell_interaction_area: InteractionArea = %SellInteractionArea
 @onready var sell_marker: Marker3D = %SellMarker3D
 
+@export var shredder_animation_player: AnimationPlayer
+@onready var sfx_handler: SfxHandler = %SfxHandler
+
 func _ready() -> void:
 	interface_container.hide()
 	display_interaction_area.interacted.connect(on_display_interacted)
@@ -59,10 +62,19 @@ func on_sell_interacted(player: Player):
 		return
 	
 	Global.cash += resource.price
+	if shredder_animation_player.is_playing():
+		shredder_animation_player.stop()
+	shredder_animation_player.play("shredder")
+	sfx_handler.play("Eat")
 	
 	resource.show()
 	resource.global_position = sell_marker.global_position
-	var tween = create_tween()
-	tween.tween_property(resource, "global_position:y", sell_marker.global_position.y - 1.5, 0.5)
-	await tween.finished
+	
+	var tween_time = 0.5
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(resource, "global_position:y", sell_marker.global_position.y - 1.5, tween_time)
+	tween.tween_property(resource, "scale", Vector3(), tween_time)
+	
+	await get_tree().create_timer(tween_time).timeout
+	
 	resource.queue_free()
