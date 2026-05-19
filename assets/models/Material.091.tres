@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b7ejrtwutitoo"]
+
+[ext_resource type="Texture2D" uid="uid://c55wn1ko6n3do" path="res://assets/models/Tree_Green_Thing.webp" id="1_ccyxj"]
+
+[resource]
+resource_name = "Material.091"
+transparency = 1
+albedo_texture = ExtResource("1_ccyxj")

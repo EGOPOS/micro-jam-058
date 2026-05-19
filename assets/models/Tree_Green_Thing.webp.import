@@ -2,35 +2,34 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xl75403w3jav"
-path.s3tc="res://.godot/imported/Pick_Pick_Pick_Normal.png-7c3e96e2f7af1f00da0a6abd21510bf9.s3tc.ctex"
+uid="uid://c55wn1ko6n3do"
+path="res://.godot/imported/Tree_Green_Thing.webp-76a621a920512cb0ffd683462ffca915.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
-"md5": "a2f505ce6ae442282c776c08f98dd9f1"
+"md5": "e39aefc69ae8c7b678579f970ac8e0fc"
 }
 
 [deps]
 
-source_file="res://assets/models/Pick_Pick_Pick_Normal.png"
-dest_files=["res://.godot/imported/Pick_Pick_Pick_Normal.png-7c3e96e2f7af1f00da0a6abd21510bf9.s3tc.ctex"]
+source_file="res://assets/models/Tree_Green_Thing.webp"
+dest_files=["res://.godot/imported/Tree_Green_Thing.webp-76a621a920512cb0ffd683462ffca915.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://assets/models/Pick_Pick_Pick_Normal.png"
+roughness/mode=0
+roughness/src_normal=""
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

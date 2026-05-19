@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cuamhbf0kivcu" path="res://game/resources/sellable_resource.tscn" id="1_j13u7"]
 [ext_resource type="Script" uid="uid://bulpdnr8i7rym" path="res://game/resources/end_game_resource.gd" id="2_fptot"]
 [ext_resource type="PackedScene" uid="uid://c0utf5iiah10u" path="res://assets/models/Key.glb" id="3_mwxqr"]
+[ext_resource type="Material" uid="uid://4cb5wvl4awoa" path="res://assets/materials/shaders/interact_outline_shader.tres" id="4_ld8t5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mwxqr"]
 
@@ -11,6 +12,9 @@ script = ExtResource("2_fptot")
 
 [node name="Key" parent="." index="0" unique_id=1107725165 instance=ExtResource("3_mwxqr")]
 transform = Transform3D(0.29259807, -0.066229664, -2.8949905e-09, 0, -1.3113417e-08, 0.3, -0.066229664, -0.29259807, -1.2789868e-08, 0, 0, 0)
+
+[node name="Cube_011" parent="Key" index="0" unique_id=1914230944]
+material_overlay = ExtResource("4_ld8t5")
 
 [node name="CollisionShape3D" parent="." index="1" unique_id=77926579]
 transform = Transform3D(0.0013955161, -0.9991702, -0.04070432, 0.99998736, 0.0011978857, 0.0048792646, -0.004826466, -0.04071063, 0.99915946, 0, 0, 0)

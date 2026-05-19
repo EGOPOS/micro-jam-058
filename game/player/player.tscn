@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dju6lwhw5npbm" path="res://core/damage_components/3d/hit_area_component.gd" id="3_ha6ty"]
 [ext_resource type="Script" uid="uid://bjeirc3etwa0f" path="res://game/player/backpack_component.gd" id="3_j0mij"]
 [ext_resource type="Shader" uid="uid://cpom8e1tbcenb" path="res://assets/materials/shaders/underwater.gdshader" id="4_bdb11"]
-[ext_resource type="PackedScene" uid="uid://bqd8i45iw4j4n" path="res://assets/models/Pick.glb" id="4_gb4gm"]
+[ext_resource type="PackedScene" uid="uid://bwiu7lxdip1fa" path="res://assets/models/Pick.glb" id="4_gb4gm"]
 [ext_resource type="Script" uid="uid://b6hp8xcitaaxl" path="res://core/state_machine/state_machine.gd" id="4_qp8qn"]
 [ext_resource type="Script" uid="uid://cwxa0x8arhuv4" path="res://game/player/states/idle.gd" id="5_0n17r"]
 [ext_resource type="Script" uid="uid://1beo4p62aovt" path="res://game/player/states/move.gd" id="6_f5d78"]
@@ -44,7 +44,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qfwia"]
 render_priority = 0
 shader = ExtResource("4_bdb11")
-shader_parameter/tint = Color(0.4046822, 0.8130313, 0.95909876, 0.7254902)
+shader_parameter/tint = Color(0.27231035, 0.8408674, 0.8883175, 0.7254902)
 shader_parameter/wave_speed = 3.0
 shader_parameter/wave_freq = 10.0
 shader_parameter/wave_width = 1.0
@@ -108,6 +108,7 @@ mouse_sensivity = 0.003
 fov_falling = 10.0
 fov_acceleration = 20.0
 max_attach_distance = 5.0
+is_right_side_enabled = true
 lean_amount = 6.0
 lean_speed = 3.0
 start_recover_from = 0.5
@@ -156,7 +157,7 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
-[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=686041269 instance=ExtResource("4_gb4gm")]
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeLeft" unique_id=1166190205 instance=ExtResource("4_gb4gm")]
 transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 0, -0.11677903, 0.5112852)
 
 [node name="PickaxeRight" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1907319150]
@@ -173,7 +174,7 @@ size = Vector3(0.2, 1, 0.13652344)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.013580315, 0.35453045, -0.006494656)
 size = Vector3(0.2, 0.9258423, 0.08231811)
 
-[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=919883574 instance=ExtResource("4_gb4gm")]
+[node name="Pick2" parent="CameraPivot/Camera3D/PickaxeRight" unique_id=1342314581 instance=ExtResource("4_gb4gm")]
 transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 0, -0.11677903, 0.5112852)
 
 [node name="PickaxeLeftMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=2042362621]
@@ -250,6 +251,9 @@ stream = SubResource("AudioStreamRandomizer_qfwia")
 [node name="Land" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1104087664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 stream = SubResource("AudioStreamRandomizer_qxyrc")
+
+[node name="BrokenLegs" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=1369786585]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="Wind" type="AudioStreamPlayer3D" parent="SfxHandler" unique_id=837599599]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

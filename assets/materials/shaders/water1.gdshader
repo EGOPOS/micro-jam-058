@@ -17,7 +17,7 @@ uniform float beer_factor = 0.8;
 uniform float foam_distance = 0.01;
 uniform float foam_max_distance = 0.4;
 uniform float foam_min_distance = 0.04;
-uniform vec4 foam_color: source_color  = vec4(1.0);
+uniform vec4 foam_color: source_color = vec4(1.0);
 
 uniform vec2 surface_noise_tiling = vec2(1.0, 4.0);
 uniform vec3 surface_noise_scroll = vec3(0.03, 0.03, 0.0);
@@ -37,54 +37,66 @@ varying vec3 viewNormal;
 
 vec4 alphaBlend(vec4 top, vec4 bottom)
 {
-	vec3 color = (top.rgb * top.a) + (bottom.rgb * (1.0 - top.a));
-	float alpha = top.a + bottom.a * (1.0 - top.a);
-	
-	return vec4(color, alpha);
+    vec3 color = (top.rgb * top.a) + (bottom.rgb * (1.0 - top.a));
+    float alpha = top.a + bottom.a * (1.0 - top.a);
+    
+    return vec4(color, alpha);
 }
 
 void vertex() {
-	viewNormal = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
-	noiseUV = UV * surface_noise_tiling;
-	distortUV = UV;
+    viewNormal = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+    noiseUV = UV * surface_noise_tiling;
+    distortUV = UV;
 }
 
 void fragment(){
-	// https://www.youtube.com/watch?v=Jq3he9Lbj7M
-	float depth = texture(DEPTH_TEXTURE, SCREEN_UV).r;
-	depth = depth * 2.0 - 1.0;
-	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
-	depth = depth + VERTEX.z;
-	depth = exp(-depth * beer_factor);
-	depth = 1.0 - depth;
-	
-	// Still unsure how to get properly the NORMAL from the camera
-	// this was my best attempt
-	vec3 existingNormal = vec3(dFdx(depth), dFdy(depth), 0);
-	
-	float normalDot = clamp(dot(existingNormal.xyz, viewNormal), 0.0, 1.0);
-	float foamDistance = mix(foam_max_distance, foam_min_distance, normalDot);
-	
-	float foamDepth = clamp(depth / foamDistance, 0.0, 1.0);
-	float surfaceNoiseCutoff = foamDepth * surface_noise_cutoff;
-	
-	vec4 distortNoiseSample = texture(distortNoise, distortUV);
-	vec2 distortAmount = (distortNoiseSample.xy * 2.0 -1.0) * surface_distortion_amount;
-	
-	vec2 noise_uv = vec2(
-		(noiseUV.x + TIME * surface_noise_scroll.x) + distortAmount.x , 
-		(noiseUV.y + TIME * surface_noise_scroll.y + distortAmount.y)
-	);
-	float surfaceNoiseSample = texture(surfaceNoise, noise_uv).r;
-	float surfaceNoiseAmount = smoothstep(surfaceNoiseCutoff - SMOOTHSTEP_AA, surfaceNoiseCutoff + SMOOTHSTEP_AA, surfaceNoiseSample);
-	
-	float waterDepth = clamp(depth / _DepthMaxDistance, 0.0, 1.0) * _DepthFactor;
-	vec4 waterColor = mix(_DepthGradientShallow, _DepthGradientDeep, waterDepth);
+    // 1. Берем сырое значение из текстуры глубины
+    float depth_raw = texture(DEPTH_TEXTURE, SCREEN_UV).r;
+    
+    // 2. Переводим координаты экрана и сырую глубину в NDC (0..1 для Vulkan)
+    vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth_raw);
+    
+    // 3. Через инвертированную матрицу проекции возвращаем пиксель в View Space (пространство камеры)
+    vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+    view.xyz /= view.w;
+    
+    // 4. Получаем реальное расстояние в метрах от камеры до объекта за водой
+    float linear_depth = -view.z;
+    
+    // 5. Считаем толщину слоя воды. 
+    // Поскольку VERTEX.z в fragment-шейдере отрицательный, мы его прибавляем
+    float depth = linear_depth + VERTEX.z;
+    
+    // Дальше идет твоя оригинальная логика затухания и пены
+    depth = exp(-depth * beer_factor);
+    depth = 1.0 - depth;
+    
+    // Вычисление нормали дна для пены (теперь dFdx/dFdy заведутся корректно, так как depth стабилен)
+    vec3 existingNormal = vec3(dFdx(depth), dFdy(depth), 0);
+    
+    float normalDot = clamp(dot(existingNormal.xyz, viewNormal), 0.0, 1.0);
+    float foamDistance = mix(foam_max_distance, foam_min_distance, normalDot);
+    
+    float foamDepth = clamp(depth / foamDistance, 0.0, 1.0);
+    float surfaceNoiseCutoff = foamDepth * surface_noise_cutoff;
+    
+    vec4 distortNoiseSample = texture(distortNoise, distortUV);
+    vec2 distortAmount = (distortNoiseSample.xy * 2.0 -1.0) * surface_distortion_amount;
+    
+    vec2 noise_uv = vec2(
+        (noiseUV.x + TIME * surface_noise_scroll.x) + distortAmount.x, 
+        (noiseUV.y + TIME * surface_noise_scroll.y + distortAmount.y)
+    );
+    float surfaceNoiseSample = texture(surfaceNoise, noise_uv).r;
+    float surfaceNoiseAmount = smoothstep(surfaceNoiseCutoff - SMOOTHSTEP_AA, surfaceNoiseCutoff + SMOOTHSTEP_AA, surfaceNoiseSample);
+    
+    float waterDepth = clamp(depth / _DepthMaxDistance, 0.0, 1.0) * _DepthMaxDistance;
+    vec4 waterColor = mix(_DepthGradientShallow, _DepthGradientDeep, waterDepth);
 
-	vec4 surfaceNoiseColor = foam_color;
+    vec4 surfaceNoiseColor = foam_color;
     surfaceNoiseColor.a *= surfaceNoiseAmount;
-	vec4 color = alphaBlend(surfaceNoiseColor, waterColor);
-	
-	ALBEDO = color.rgb;
-	ALPHA = color.a;
+    vec4 color = alphaBlend(surfaceNoiseColor, waterColor);
+    
+    ALBEDO = color.rgb;
+    ALPHA = color.a;
 }

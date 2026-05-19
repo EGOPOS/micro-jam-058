@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3p3k3cfiyjk5"
-path.s3tc="res://.godot/imported/grass_slop_01.png-04021bc4f4e5deba7357e9db8f46d229.s3tc.ctex"
+uid="uid://dhidexmelfr0k"
+path.s3tc="res://.godot/imported/Other_wood_slop_02.png-590e12c9605a9c1cba0159e55ff54e56.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "07f24ed4dca33c93062721b20948d547"
+}
 
 [deps]
 
-source_file="res://assets/pictures/grass_slop_01.png"
-dest_files=["res://.godot/imported/grass_slop_01.png-04021bc4f4e5deba7357e9db8f46d229.s3tc.ctex"]
+source_file="res://assets/models/Other_wood_slop_02.png"
+dest_files=["res://.godot/imported/Other_wood_slop_02.png-590e12c9605a9c1cba0159e55ff54e56.s3tc.ctex"]
 
 [params]
 

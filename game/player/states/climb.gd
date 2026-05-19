@@ -43,6 +43,7 @@ func update(delta):
 	
 	var direction = player.get_free_direction()
 	var target_pos = average_point + direction * player.lean_amount
+	var hands_multiplier =  player.get_attached_positions().size()
 	
 	var multiplier = 1.0 # 1.0 — жесткое ограничение, 0.1 — мягкое «резиновое» натяжение
 	var distance = player.global_position.distance_to(average_point)
@@ -55,7 +56,7 @@ func update(delta):
 		#print(average_point, player.global_position)
 	
 	var target_velocity = (target_pos - player.global_position) * player.lean_speed
-	player.apply_climb_attaching(delta, target_velocity, player.lean_speed)
+	player.apply_climb_attaching(delta, target_velocity, player.lean_speed * hands_multiplier)
 	
 	player.move_and_slide()
 

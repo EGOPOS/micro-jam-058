@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beai17bnby6e4"
-path="res://.godot/imported/4674764764.png-f99908114a0ffcff130194c33461a739.ctex"
+uid="uid://cxhx8plxe4m0w"
+path.s3tc="res://.godot/imported/Tree_wood_slop_01.png-c857e079e3a32b38c9afca69b4892739.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "7899897f034247ca53e5e4d4b9ad2d55"
 }
 
 [deps]
 
-source_file="res://assets/pictures/4674764764.png"
-dest_files=["res://.godot/imported/4674764764.png-f99908114a0ffcff130194c33461a739.ctex"]
+source_file="res://assets/models/Tree_wood_slop_01.png"
+dest_files=["res://.godot/imported/Tree_wood_slop_01.png-c857e079e3a32b38c9afca69b4892739.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

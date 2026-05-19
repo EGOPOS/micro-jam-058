@@ -40,12 +40,12 @@ materials/extract_path=""
 _subresources={
 "materials": {
 "Far_3.001": {
-"use_external/enabled": true,
+"use_external/enabled": false,
 "use_external/fallback_path": "res://assets/models/Far_3.001.tres",
 "use_external/path": "uid://b767ragnk11ls"
 },
 "Metal_Full.001": {
-"use_external/enabled": true,
+"use_external/enabled": false,
 "use_external/fallback_path": "res://assets/models/Metal_Full.001.tres",
 "use_external/path": "uid://yjs5fca2p8kn"
 },

@@ -10,6 +10,7 @@ size = Vector3(1.9772949, 1.0776367, 1.1372986)
 price = 500
 
 [node name="Crate" parent="." index="0" unique_id=1505453243 instance=ExtResource("2_oa35n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30905107, 0)
 
 [node name="CollisionShape3D" parent="." index="1" unique_id=77926579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016235352, 0.48884332, -0.019901395)

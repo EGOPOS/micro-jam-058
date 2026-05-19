@@ -44,7 +44,6 @@ class_name Player extends CharacterBody3D
 @export var recover_stamina_muliplier: float = 2.5
 @export var start_recover_from: float = 0.3
 
-
 @export_group("overweight affect")
 @export var jump_affect_scale: float = 0.8
 @export var stamina_affect_scale: float = 0.8
@@ -80,6 +79,9 @@ class_name Player extends CharacterBody3D
 
 var interaction_delay: float = 0.1
 var last_interaction_time: int #ticks
+
+var time_to_drown: float = 5.0
+var drown_timer: float = 0.0
 
 var camera_shake_tween: Tween
 var initial_camera_pos: Vector3 = Vector3()
@@ -120,7 +122,6 @@ static var is_blocked: bool = false
 var is_respawning: bool = false
 
 @onready var underwater_mesh: MeshInstance3D = %UnderWaterMesh
-
 
 #region movement methods
 func apply_acceleration(delta: float, direction: Vector3, multiplier: float = 1.0):
@@ -211,7 +212,7 @@ func step_process(delta: float):
 		step_timer = 0
 		sfx_handler.play("Step")
 
-# Вызывать в _process или _physics_process игрока
+
 func water_process(delta: float, current_water_level: float):
 	# Проверяем, находится ли центр (или ноги) игрока ниже уровня воды
 	var is_in_water: bool = global_position.y < current_water_level
@@ -236,7 +237,14 @@ func water_process(delta: float, current_water_level: float):
 		sfx_handler.play("WaterOut")
 		AmbientPlayer.unmute_from_water(0.25)
 		underwater_mesh.hide()
-		
+	
+	if is_in_water:
+		drown_timer += delta
+		if drown_timer >= time_to_drown:
+			fall_return()
+	else:
+		drown_timer = 0
+	
 	# Сохраняем текущее состояние для следующего кадра
 	_was_in_water = is_in_water
 
@@ -385,12 +393,14 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and not was_on_floor:
 		if last_velocity_y < -5.0:
 			# SOUND
-			sfx_handler.play("Land")
 			
 			if last_velocity_y < death_fall_velocity:
 				fall_return()
+				sfx_handler.play("BrokenLegs")
 			else:
 				trigger_fall_shake(last_velocity_y)
+				sfx_handler.play("Land")
+	
 	
 	if is_on_floor() and velocity.length() > 3:
 		# SOUND
@@ -506,7 +516,9 @@ func _input(event: InputEvent):
 	
 	if Engine.is_editor_hint() and Input.is_action_just_pressed("ui_cancel"):
 		DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED else DisplayServer.MOUSE_MODE_CAPTURED)
-
+	if OS.has_feature("editor") and Input.is_action_just_pressed("hide_hud"):
+		hud.visible = !hud.visible
+		print(1)
 	#if Input.is_key_pressed(KEY_R):
 		#fall_return()
 

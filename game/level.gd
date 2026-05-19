@@ -24,7 +24,7 @@ var timer_multiplier: float = 1.0
 @onready var sfx_handler: SfxHandler = $SfxHandler 
 @onready var game_finish_interaction_area: InteractionArea = %GameFinishInteractionArea
 @export var game_finisher_anim_player: AnimationPlayer
-
+@export var max_player_distance: float = 150
 # Внутренние переменные
 var _timer: float = 0.0
 var _is_high_tide: bool = true
@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 	var start_point = Vector3()
 	var flat_vector = Vector3(player.global_position.x, 0, player.global_position.z)
 	var distance = flat_vector.distance_to(start_point)
-	if distance > 240:
+	if distance > max_player_distance:
 		var dir = (flat_vector - start_point).normalized()
 		var target_position = player.global_position - dir
 		player.global_position = player.global_position.lerp(target_position, 1.0)
@@ -123,7 +123,7 @@ func _process(delta: float) -> void:
 		player.velocity += Vector3.UP * (gloal_wl - player.global_position.y) * player_from_water_power * delta
 		player.velocity = player.velocity.clampf(-40, 40)
 		
-		player.restore_stamina(delta * 0.1)
+		player.restore_stamina(delta * 3)
 		
 		if drop_resource_timer > drop_resource_rate:
 			drop_resource_timer = 0
